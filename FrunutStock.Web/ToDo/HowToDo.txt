@@ -1,0 +1,7 @@
+﻿Create Migration:
+1. Add-Migration "Order" //-Force
+2. Update-Database –Verbose
+
+using Microsoft.AspNet.Identity;
+private string username = System.Web.HttpContext.Current.User.Identity.GetUserName();
+

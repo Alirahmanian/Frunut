@@ -1,0 +1,168 @@
+﻿@model FrunutStock.Model.Models.Order
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Order</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Company.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Company.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Employee.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Employee.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AmountItem)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AmountItem)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AmountReserve)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AmountReserve)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrderDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PaymentDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaymentDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PaidDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaidDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LoadingDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LoadingDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LoadedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LoadedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AmountPaid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AmountPaid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Coments)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Coments)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderdBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrderdBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Transport)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Transport)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PaymentWarning)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaymentWarning)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ForcedPaid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ForcedPaid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderPaid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrderPaid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cash)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cash)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

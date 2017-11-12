@@ -1,0 +1,98 @@
+﻿@model FrunutStock.Model.Models.ItemWarehouse
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ItemWarehouse</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Item.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Item.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Warehouse.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Warehouse.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QtyBoxesIn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QtyBoxesIn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QtyKgIn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QtyKgIn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QtyTotalWeightIn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QtyTotalWeightIn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QtyBoxesOnhand)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QtyBoxesOnhand)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QtyKgOnhand)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QtyKgOnhand)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QtyTotalWeightOnhand)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QtyTotalWeightOnhand)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QtyBoxesReserved)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QtyBoxesReserved)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QtyTotalWeightReserved)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QtyTotalWeightReserved)
+        </dd>
+
+    </dl>
+</div>
+<p>
+   <!-- @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) | -->
+    @Html.ActionLink("Back to List", "Index")
+</p>

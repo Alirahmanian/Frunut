@@ -1,0 +1,87 @@
+﻿@model IEnumerable<FrunutStock.Model.Models.ItemWarehouse>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+  <!--  @Html.ActionLink("Create New", "Create") -->
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Item.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Warehouse.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QtyBoxesIn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QtyKgIn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QtyTotalWeightIn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QtyBoxesOnhand)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QtyKgOnhand)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QtyTotalWeightOnhand)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QtyBoxesReserved)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QtyTotalWeightReserved)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Warehouse.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QtyBoxesIn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QtyKgIn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QtyTotalWeightIn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QtyBoxesOnhand)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QtyKgOnhand)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QtyTotalWeightOnhand)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QtyBoxesReserved)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QtyTotalWeightReserved)
+        </td>
+        <td>
+            <!--@Html.ActionLink("Edit", "Edit", new { id=item.ID }) |-->
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) <!--|
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID }) -->
+        </td>
+    </tr>
+}
+
+</table>

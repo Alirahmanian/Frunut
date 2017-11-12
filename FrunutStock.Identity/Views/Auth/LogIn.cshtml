@@ -1,0 +1,48 @@
+﻿<div class="jumbotron">
+    <style>
+        .centered {  position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);}
+        .pos-center{ text-align:center}
+        .pos-right{ text-align:right;}
+    </style>
+    <div class="container centered">
+
+
+
+        @model FrunutStock.Web.Models.LogIn
+        @{
+            Layout = "";
+        }
+
+        @{
+            ViewBag.Title = "Log In";
+        }
+
+        @Html.ValidationSummary(true)
+
+        @using (Html.BeginForm())
+        {
+
+
+            <div class="row">
+               
+                    <p class="pos-center"><img src="@Url.Content("~/Content/Images/FruNutLogo.jpg")" alt="Frunut logo" /></p>
+                
+               
+                    <p>@Html.LabelFor(model => model.UserName): @Html.EditorFor(model => model.UserName, new { autocomplete = "off" })</p>
+               
+                
+                    <p> @Html.LabelFor(model => model.Password): @Html.EditorFor(model => model.Password, new { autocomplete = "off" })</p>
+               
+               
+                    <p class="pos-center"><button type="submit">Log In</button></p>
+               
+                
+                    <p>Don't have an account? <a href="@Url.Action("register")">Register</a></p>
+                
+            </div>
+
+
+        }
+    </div>
+</div>
+

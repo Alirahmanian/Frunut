@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewBag.Title</title>
+    <!-- Bootstrap -->
+    @Styles.Render("~/css/bootstrap.css")
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/
+    html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/
+    respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+    <nav id="myNavbar" class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("Frunut", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    @Html.ActionLink("Stock", "Index", "Home", new { area = "Stock" }, null)
+                </li>
+                <li class="active">
+                    @Html.ActionLink("Item country", "Index", "Countries", new { area = "Stock" }, null)
+                </li>
+                <li class="active">
+                    @Html.ActionLink("Item group", "Index", "ItemGroups", new { area = "Stock" }, null)
+                </li>
+                <li class="active">
+                    @Html.ActionLink("Item", "Index", "Items", new { area = "Stock" }, null)
+                </li>
+                <li class="active">
+                    @Html.ActionLink("Add item to warehouse ", "Index", "AddItems", new { area = "Stock" }, null)
+                </li>
+                <li class="active">
+                    @Html.ActionLink("Warehouse", "Index", "Warehouses", new { area = "Stock" }, null)
+                </li>
+                <li class="active">
+                    @Html.ActionLink("Items in Warehouse", "Index", "ItemWarehouses", new { area = "Stock" }, null)
+                </li>
+                <li>
+                    <p>
+                        <a href="@Url.Action("logout", "auth")"><img src="~/Content/Images/ShutDown.jpg" width="25px" height="25px" alt="Log out" style="vertical-align:middle" /> </a>
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    @RenderBody()
+    
+   
+    @Scripts.Render("~/js/bootstrap.js")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+

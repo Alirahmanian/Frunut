@@ -1,0 +1,47 @@
+﻿
+    <style>
+        .centered {  position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);}
+        .pos-center{ text-align:center}
+        .pos-right{ text-align:right;}
+        .withBorders{
+            padding: 10px;
+            border :thin;
+            border-width: 1px;
+            border-color: orange;
+            background-color:beige;
+        }
+    </style>
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<link href="~/Content/bootstrap-theme.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <div class="container centered ">
+
+
+
+        @model FrunutStock.Web.Models.LogIn
+        @{
+            Layout = "";
+        }
+
+        @{
+            ViewBag.Title = "Log In";
+        }
+
+        @Html.ValidationSummary(true)
+
+        @using (Html.BeginForm())
+        {
+            <div class="from-group centered ">
+                <p class="pos-center"><img src="@Url.Content("~/Content/Images/FruNutLogo.jpg")" alt="Frunut logo" /></p><br />
+                <div class="from-group form-inline withBorders " >
+                   
+                    <span> Username </span><span>@Html.EditorFor(model => model.UserName, new { autocomplete = "off", @placeholder = " användarnamn" })</span>
+                    <span> Password </span><span>@Html.EditorFor(model => model.Password, new { autocomplete = "off" })</span>
+                    <span><button type="submit" class="btn btn-success">Log In</button></span>
+                   
+                </div>
+            </div>
+        }
+    </div>
+
+

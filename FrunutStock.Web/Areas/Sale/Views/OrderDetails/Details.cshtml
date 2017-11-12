@@ -1,0 +1,82 @@
+﻿@model FrunutStock.Model.Models.OrderDetail
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>OrderDetail</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Item.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Item.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Order.Coments)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Order.Coments)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Warehouse.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Warehouse.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Extended_Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Extended_Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QtyBoxes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QtyBoxes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QtyReservBoxes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QtyReservBoxes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QtyKg)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QtyKg)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

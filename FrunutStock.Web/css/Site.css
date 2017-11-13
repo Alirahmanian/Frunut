@@ -1,1 +1,11 @@
-﻿
+﻿dt, dd {
+    display: inline-block;
+}
+
+dt {
+    width: 50%;
+}
+
+dd {
+    min-width: 5%;
+}

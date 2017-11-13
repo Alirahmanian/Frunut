@@ -118,67 +118,68 @@
                  </fieldset>
              </div>
         </div>
-                
+        <div class="col-xs-12"><hr></div>        
     
-       <div id="OrderDetails" class="details">
-           <h2> Order items </h2>
-           <div  style="background-color:beige;">
-               <dl class="form">
-                   <dt class="col-lg-1"><label for="ItemGroup">Group</label></dt>
-                   <dd class="col-lg-2"><select id="ItemGroup" class="form-control" onchange="LoadItems(this)">
-                        <option>Select</option>
+       <div id="OrderDetails" class="details" >
+           <h5> Order items </h5>
+           <div id="divCol" class="col-lg-12" >
+               <div  class="col-lg-1">
+                   <label for="ItemGroup">Group</label><br />
+                   <span>
+                       <select id="ItemGroup" class="form-control" onchange="LoadItems(this)">
+                           <option>Select</option>
                        </select>
-                       <span class="error">Select item group</span>
-                   </dd>
-                   <dt class="col-lg-1"><label for="Item">Item</label></dt>
-                   <dd class="col-lg-2">
+                   </span>
+                   <span class="error">Select item group</span>
+               </div>
+               <div class="col-lg-1">
+                   <label for="Item">Item</label><br />
+                   <span>
                        <select id="Item" class="form-control" onchange="LoadWarehouses(this)">
                            <option>Select</option>
                        </select>
-                       <span class="error">Select item</span>
-                   </dd>
-                   <dt class="col-lg-1"><label for="Warehouse">Warehouse</label></dt>
-                   <dd class="col-lg-2">
-                       <select id="Warehouse" class="form-control">
-                           <option>Select</option>
-                       </select>
-                       <span class="error">Select warehouse</span>
-                   </dd>
-                   <dt><label for="Boxes">Boxes</label></dt>
-                   <dd>
-                       <input type="text" id="Boxes" class="form-control" />
-                       <span class="error">Valid quantity boxes required</span>
-                   </dd>
-                   <dt><label for="ReserveBoxes">Reserve</label></dt>
-                   <dd>
-                       <input type="text" id="ReserveBoxes" class="form-control" />
-                       <span class="error">Valid quantity reserve boxes required</span>
-                   </dd>
-                   <dt><label for="ExtraKg">Extra kg</label></dt>
-                   <dd>
-                       <input type="text" id="ExtraKg" class="form-control" />
-                       <span class="error">Valid extra kg required</span>
-                   </dd>
-                   <dt><label for="Price">Price/kg</label></dt>
-                   <dd>
-                       <input type="text" id="Price" class="form-control" />
-                       <span class="error">Valid price required</span>
-                   </dd>
-                   <dt><label for="ExtendedPrice">Extended price</label></dt>
-                   <dd>
-                       <input type="text" id="ExtendedPrice" class="form-control" />
-                       <span class="error">Valid extended price required</span>
-                   </dd>
-                   <dt></dt>
-                   <dd valign="top">
-                       <div>
-                           <input id="submit" type="button" value="Add" onclick="return ValidateOrderDetails()" class="btn btn-warning" />
-                       </div>
-                   </dd>
-
-               </dl>
-              
+                   </span>
+                   <span class="error">Select item</span>
+               </div>
+               <div class="col-lg-1">
+                   <label for="Warehouse">Warehouse</label><br />
+                   <select id="Warehouse" class="form-control">
+                       <option>Select</option>
+                   </select>
+                   <span class="error">Select warehouse</span>
+               </div>
+               <div class="col-lg-1">
+                   <label for="Boxes">Boxes</label><br />
+                   <input type="text" id="Boxes" class="form-control" />
+                   <span class="error">Valid quantity boxes required</span>
+               </div>
+               <div class="col-lg-1">
+                   <label for="ReserveBoxes">Reserve</label><br />
+                   <input type="text" id="ReserveBoxes" class="form-control" />
+                   <span class="error">Valid quantity reserve boxes required</span>
+               </div>
+               <div class="col-lg-1">
+                   <label for="ExtraKg">Extra kg</label><br />
+                   <input type="text" id="ExtraKg" class="form-control" />
+                   <span class="error">Valid extra kg required</span>
+               </div>
+               <div class="col-lg-1">
+                   <label for="Price">Price/kg</label><br />
+                   <input type="text" id="Price" class="form-control" />
+                   <span class="error">Valid price required</span>
+               </div>
+               <div class="col-lg-1">
+                   <label for="ExtendedPrice">Extended price</label><br />
+                   <input type="text" id="ExtendedPrice" class="form-control" disabled />
+                   <span class="error">Valid extended price required</span>
+               </div>
+               <div class="col-lg-4" valign="top">
+                   <br />
+                   <input id="submit" type="button" value="Add" onclick="return ValidateOrderDetails()" class="btn btn-warning" />
+               </div>
            </div>
+           <div class="col-xs-12"><hr></div>
+           <br />
            <div class="container">
              <div class="table-responsive">
                <table class="table-striped table-bordered" id="orderDetailsTable">

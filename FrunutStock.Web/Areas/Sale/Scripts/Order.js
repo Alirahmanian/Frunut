@@ -238,7 +238,7 @@ function saveOrderDetailsRow()
 //=======================================
 function genCheckOnHands(id, searchText) {
     var valid = true;
-    var list = $("#Warehouse option:selected").text().split('|');
+   // var list = $("#Warehouse option:selected").text().split('|');
     //jQuery.each(list, (index, item) => {
     //    if (item.indexOf(searchText) > -1) {
     //        var boxes = $("#" + id).val() ? $("#" + id).val() : 0;

@@ -3,7 +3,17 @@
     height: 60%;
     width: 100%;
 }
-div[class=col-lg-12] {
+div[class=MultiColBG] {
     background-color: beige;
 }
-
+label{
+    font-weight:normal;
+}
+body {
+    margin: 10px;
+    /*background-color: #F8F8FF;*/
+}
+table {
+    padding:10px;
+    column-gap: 4px;
+}

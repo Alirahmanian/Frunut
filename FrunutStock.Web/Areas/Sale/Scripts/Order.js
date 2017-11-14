@@ -238,21 +238,21 @@ function saveOrderDetailsRow()
 //=======================================
 function genCheckOnHands(id, searchText) {
     var valid = true;
-   // var list = $("#Warehouse option:selected").text().split('|');
-    //jQuery.each(list, (index, item) => {
-    //    if (item.indexOf(searchText) > -1) {
-    //        var boxes = $("#" + id).val() ? $("#" + id).val() : 0;
-    //        var onHands = item.replace(searchText, "") ? item.replace(searchText, "") : 0;
-    //        if (parseInt(boxes) > parseInt(onHands)) {
-    //            $("#" + id).siblings('span.error').css('visibility', 'visible');
-    //            $("#" + id).siblings('span.error').append(" |not avaiable");
-    //            valid = false;
-    //        } else {
-    //            $("#" + id).siblings('span.error').css('visibility', 'hidden');
-    //            valid = true;
-    //        }
-    //    }
-    //});
+    var list = $("#Warehouse option:selected").text().split('|');
+    jQuery.each(list, (index, item) => {
+        if (item.indexOf(searchText) > -1) {
+            var boxes = $("#" + id).val() ? $("#" + id).val() : 0;
+            var onHands = item.replace(searchText, "") ? item.replace(searchText, "") : 0;
+            if (parseInt(boxes) > parseInt(onHands)) {
+                $("#" + id).siblings('span.error').css('visibility', 'visible');
+                $("#" + id).siblings('span.error').append(" |not avaiable");
+                valid = false;
+            } else {
+                $("#" + id).siblings('span.error').css('visibility', 'hidden');
+                valid = true;
+            }
+        }
+    });
     return valid;
 }
 
@@ -325,11 +325,11 @@ function CalcExtendexPrice() {
 //=======================================
 //=======================================
 $(document).ready(
-   // EnableDisableOrderDetails(),
-   // LoadItemGroups($('#ItemGroup')),
+    EnableDisableOrderDetails(),
+    LoadItemGroups($('#ItemGroup')),
     
 
-    //, $('#Add').on('click', ValidateOrderDetails())
+    $('#Add').on('click', ValidateOrderDetails())
    
     
     );

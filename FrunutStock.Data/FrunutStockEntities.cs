@@ -27,10 +27,11 @@ namespace FrunutStock.Data
         public DbSet<ItemGroup> ItemGroups { get; set; }
         public DbSet<Item> Items { get; set; }
         public DbSet<Warehouse> Warehouses { get; set; }
-        public DbSet<AddItem> AddItems { get; set; }
+        public DbSet<ReceiveItem> ReceiveItems { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<ItemWarehouse> ItemWarehouses { get; set; }
 
+        //users and roles
         public DbSet<AspNetRoles> AspNetRoles { get; set; }
         public DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
         public DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
@@ -85,7 +86,7 @@ namespace FrunutStock.Data
                 dynamic configurationInstance = Activator.CreateInstance(type);
                 modelBuilder.Configurations.Add(configurationInstance);
             }
-            base.OnModelCreating(modelBuilder);
+           
 
            /*
             modelBuilder.Configurations.Add(new EmployeeConfiguration());
@@ -106,7 +107,10 @@ namespace FrunutStock.Data
                 .WithRequired(e => e.AspNetUsers)
                 .HasForeignKey(e => e.UserId);
 
-            
+
+            base.OnModelCreating(modelBuilder);
+
+
         }
 
        

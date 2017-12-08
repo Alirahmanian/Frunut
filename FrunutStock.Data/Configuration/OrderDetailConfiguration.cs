@@ -27,8 +27,8 @@ namespace FrunutStock.Data.Configuration
 
 
             //relationship  
-            HasRequired(t => t.Item).WithMany(g => g.OrderDetails).HasForeignKey(t => t.ItemID);
-            HasRequired(t => t.Warehouse).WithMany(g => g.OrderDetails).HasForeignKey(t => t.WarehouseID);
+           // HasRequired(t => t.Item).WithMany(g => g.OrderDetails).HasForeignKey(t => t.ItemID);
+           // HasRequired(t => t.Warehouse).WithMany(g => g.OrderDetails).HasForeignKey(t => t.WarehouseID);
             HasRequired(t => t.Order).WithMany(g => g.OrderDetails).HasForeignKey(t => t.OrderID);
 
         }

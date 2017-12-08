@@ -9,27 +9,29 @@ using System.Threading.Tasks;
 
 namespace FrunutStock.Data.Configuration
 {
-    public class ItemConfiguration : EntityTypeConfiguration<Item>
+    class ReceiveItemConfiguration : EntityTypeConfiguration<ReceiveItem>
     {
-        public ItemConfiguration()
+        public ReceiveItemConfiguration()
         {
-            ToTable("Items");
+            ToTable("ReceiveItems");
             HasKey(t => t.ID);
             Property(t => t.ID).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             Property(t => t.AddedDate).IsRequired();
             Property(t => t.ModifiedDate).IsOptional();
             Property(t => t.UserName).IsRequired().HasMaxLength(50);
 
-            Property(t => t.Name).IsRequired().HasMaxLength(100);
+            Property(t => t.Date).IsRequired();
             Property(t => t.Description).HasMaxLength(500);
-            Property(t => t.MinimumPrice).IsRequired();
-            Property(t => t.BoxWeight).IsRequired();
-            Property(t => t.ItemGroupID).IsRequired();
-            Property(t => t.CountryID).IsOptional();
+            Property(t => t.QtyBoxes).IsRequired();
+            Property(t => t.QtyKg).IsRequired();
+            Property(t => t.ItemID).IsRequired();
+            Property(t => t.WarehouseID).IsRequired();
+
 
 
             //relationship  
-            HasRequired(t => t.ItemGroup).WithMany(g => g.Items).HasForeignKey(t => t.ItemGroupID).WillCascadeOnDelete(false);
+            HasRequired(t => t.Item);
+            HasRequired(t => t.Warehouse);
 
         }
     }

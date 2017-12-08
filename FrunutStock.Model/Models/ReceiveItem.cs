@@ -8,15 +8,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FrunutStock.Model.Models
 {
-    public class AddItem : BaseEntity
+    public class ReceiveItem : BaseEntity
     {
         public DateTime Date { get; set; }
         public Int64 ItemID { get; set; }
         public Int64 WarehouseID { get; set; }
+        public Int64? CompanyID { get; set; }
         public string Description { get; set; }
         public int QtyBoxes { get; set; }
         public decimal QtyKg { get; set; }
+
         public virtual Item Item { get; set; }
         public virtual Warehouse Warehouse { get; set; }
+        public virtual Company Company { get; set; }
     }
 }

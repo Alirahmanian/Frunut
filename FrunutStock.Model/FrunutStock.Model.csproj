@@ -90,6 +90,8 @@
     <Compile Include="Models\UserRole.cs" />
     <Compile Include="Partials\Order.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validators\FutureDate.cs" />
+    <Compile Include="Validators\ValidTime.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

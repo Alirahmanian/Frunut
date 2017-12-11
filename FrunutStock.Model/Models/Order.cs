@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using FrunutStock.Model.Validators;
 
 namespace FrunutStock.Model.Models
 {
@@ -18,6 +19,7 @@ namespace FrunutStock.Model.Models
         public DateTime OrderDate { get; set; }
         public DateTime PaymentDate { get; set; }
         public DateTime? PaidDate { get; set; }
+       // [FutureDate]
         public DateTime LoadingDate { get; set; }
         public DateTime? LoadedDate { get; set; }
         public decimal AmountPaid { get; set; }

@@ -223,8 +223,7 @@ function saveOrderDetailsRow()
             contentType: 'application/json',
             success: function (data) {
                 //render items to appropriate dropdown
-                debugger;
-                alert(data);
+              
                 addOrderDetail();
             },
             error: function (error) {
@@ -284,8 +283,8 @@ function addOrderDetail() {
     row +='<td>' + $("#ExtraKg").val() + '</td>';
     row +='<td>' + $("#Price").val() + '</td>';
     row +='<td>' + $("#ExtendedPrice").val() + $("#ExtendedPrice").text() + '</td>';
-    row += '<td><button id="EditOrderRow" style="background: green;" type="button" class="editRow btn btn-warning" onclick=" DeleteOrderRow()">Edit</ button></td>';
-    row += '<td><button id="DeleteOrderRow" style="background: red;" type="button" class="removeRow btn btn-danger">Delete</ button></td>';
+    row += '<td></td>';
+    row += '<td></td>';
     row += '</tr>';
     $('#orderDetailsTable tbody').last().append(row);
     $(".removeRow").on('click',function(){

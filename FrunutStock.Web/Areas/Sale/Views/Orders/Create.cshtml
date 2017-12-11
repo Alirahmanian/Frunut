@@ -4,13 +4,18 @@
     ViewBag.Title = "Create";
 }
 
+@helper LabelWithMarkRazor(string content)
+{
+    <label><mark>@content</mark></label>
+}
+@LabelWithMarkRazor("My custom razor helper")
 <h2>Create</h2>
 <script src="~/Scripts/jquery-3.1.1.js"></script>
 <link href="~/css/Site.css" rel="stylesheet" />
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal" style="margin:10px;">
         <h4>Order</h4>
         @{
@@ -32,7 +37,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.CompanyID, "Company", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.DropDownList("CompanyID", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.DropDownList("CompanyID", null, htmlAttributes: new { @class = "form-control", autofocus = "autofocus" })
                             @Html.ValidationMessageFor(model => model.CompanyID, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -40,7 +45,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.OrderdBy, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.OrderdBy, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.OrderdBy, new { htmlAttributes = new { @class = "form-control", placeholder = "customer contact person" } })
                             @Html.ValidationMessageFor(model => model.OrderdBy, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -61,7 +66,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.OrderDate, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.OrderDate, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.OrderDate, new { htmlAttributes = new { @class = "form-control", @type="date", placeholder = "yyyy-mm-dd" } })
                             @Html.ValidationMessageFor(model => model.OrderDate, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -69,7 +74,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.PaymentDate, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.PaymentDate, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.PaymentDate, new { htmlAttributes = new { @class = "form-control", @type = "date", placeholder = "yyyy-mm-dd" } })
                             @Html.ValidationMessageFor(model => model.PaymentDate, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -77,7 +82,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.LoadingDate, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.LoadingDate, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.LoadingDate, new { htmlAttributes = new { @class = "form-control", @type = "date", placeholder = "yyyy-mm-dd" } })
                             @Html.ValidationMessageFor(model => model.LoadingDate, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -112,7 +117,7 @@
                     
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Create order" class="btn btn-success" />
+                            <input type="submit" value="Create order" class="btn btn-success pull-right" />
                         </div>
                     </div>
                  </fieldset>
@@ -194,19 +199,26 @@
                                </tr>
                            </thead>
                            <tbody>
-                               @foreach (var dtls in Model.OrderDetails)
-                               {
-                                 <tr>
-                                     <td>@dtls.Item.Name</td>
-                                     <td>@dtls.Warehouse.Name</td>
-                                     <td align="right">@dtls.QtyBoxes</td>
-                                     <td align="right">@dtls.QtyReservBoxes</td>
-                                     <td align="right">@dtls.QtyKg</td>
-                                     <td align="right">@dtls.Price</td>
-                                     <td align="right" ><b>@dtls.Extended_Price</b></td>
-                                     <td>@Html.ActionLink("Delete", "DeleteOrderDetail", new { id = dtls.ID })</td>
-                                 </tr>
-                               }
+                               @{
+
+                                   if (ViewBag.HOrderID != null)
+                                   {
+                                       foreach (var dtls in @Model.OrderDetails)
+                                       {
+                                        <tr>
+                                            <td>@dtls.Item.Name</td>
+                                            <td>@dtls.Warehouse.Name</td>
+                                            <td align="right">@dtls.QtyBoxes</td>
+                                            <td align="right">@dtls.QtyReservBoxes</td>
+                                            <td align="right">@dtls.QtyKg</td>
+                                            <td align="right">@dtls.Price</td>
+                                            <td align="right"><b>@dtls.Extended_Price</b></td>
+                                            <td>@Html.ActionLink("Delete", "DeleteOrderDetail",  new { id = dtls.ID, @class= "btn btn-danger pull-right" })</td>
+                                        </tr>
+                                       }
+                                   }
+
+                            }
                            </tbody>
                        </table>
 
@@ -238,3 +250,7 @@
    }
 
 </style>
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}

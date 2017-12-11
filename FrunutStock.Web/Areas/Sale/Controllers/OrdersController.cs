@@ -183,12 +183,13 @@ namespace FrunutStock.Web.Areas.Sale.Controllers
             OrderDetail savedOrderRow = null; 
             try
             {
-                ItemWarehouse itemWareHouse = db.ItemWarehouses.Find(orderDetail.WarehouseID);
+                Item item = db.Items.Find(orderDetail.ItemID);
+                Warehouse wareHouse = db.Warehouses.Find(orderDetail.WarehouseID);
                 Order order = db.Orders.Find(orderDetail.OrderID);
-                if (order != null && itemWareHouse != null)
+                if (item != null && order != null && wareHouse != null)
                 {
 
-                    orderDetail.WarehouseID = itemWareHouse.WarehouseID;
+                    orderDetail.Warehouse = wareHouse;
                     db.OrderDetails.Add(orderDetail);
                     db.SaveChanges();
                     order.TotalPrice += orderDetail.Extended_Price;

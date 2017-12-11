@@ -14,14 +14,17 @@ namespace FrunutStock.Model.Models
         public Int64 OrderID { get; set; }
         public Int64 ItemID { get; set; }
         public Int64 WarehouseID { get; set; }
+        [DisplayFormat(DataFormatString = "{0:C0}", ApplyFormatInEditMode = true)]
         public decimal Price { get; set; }
+        [DisplayFormat(DataFormatString = "{0:C0}", ApplyFormatInEditMode = true)]
         public decimal Extended_Price { get; set; }
         public int QtyBoxes { get; set; }
         public int QtyReservBoxes { get; set; }
         public decimal QtyKg { get; set; }
 
-        public virtual Order Order { get; set; }
-        public virtual Item Item { get; set; }
-        public virtual Warehouse Warehouse { get; set; }
+        //nav.
+        public Order Order { get; set; }
+        public Item Item { get; set; }
+        public Warehouse Warehouse { get; set; }
     }
 }

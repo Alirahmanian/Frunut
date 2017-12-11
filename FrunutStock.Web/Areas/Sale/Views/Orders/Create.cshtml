@@ -12,12 +12,13 @@
 <h2>Create</h2>
 <script src="~/Scripts/jquery-3.1.1.js"></script>
 <link href="~/css/Site.css" rel="stylesheet" />
+<link href="~/Areas/Sale/Css/sales.css" rel="stylesheet" />
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal" style="margin:10px;">
-        <h4>Order</h4>
+        <span class="glyphicon glyphicon-hand-left"></span>  @Html.ActionLink("Back to List", "Index") <h3>Order</h3>
         @{
             if (ViewBag.HOrderID != null)
             {
@@ -27,7 +28,10 @@
             {
                 @Html.Hidden("HOrderID", "")
             }
-                }
+         }
+        <div>
+        
+        </div>
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div>
             <div class="col-md-4">
@@ -35,23 +39,33 @@
                 <fieldset>
                     <legend>Company:</legend>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.CompanyID, "Company", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.DropDownList("CompanyID", null, htmlAttributes: new { @class = "form-control", autofocus = "autofocus" })
+                        @Html.LabelFor(model => model.CompanyID, "Customer", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @{
+                                if (Model != null && Model.ID > 0)
+                                {
+                                    @Html.DropDownList("CompanyID", null, htmlAttributes: new { @class = "form-control" })
+                                }
+                                else
+                                {
+                                    @Html.DropDownList("CompanyID", null, "", htmlAttributes: new { @class = "form-control" })
+                                }
+                            }
+                            
                             @Html.ValidationMessageFor(model => model.CompanyID, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.LabelFor(model => model.OrderdBy, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.OrderdBy, new { htmlAttributes = new { @class = "form-control", placeholder = "customer contact person" } })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.OrderdBy, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.OrderdBy, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.Cash, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
+                        <div class="col-md-4">
                             @Html.EditorFor(model => model.Cash)
                             @Html.ValidationMessageFor(model => model.Cash, "", new { @class = "text-danger" })
                         </div>
@@ -62,27 +76,27 @@
             <div class="col-md-4">
                 <!--Center col-->
                 <fieldset>
-                    <legend>Date:</legend>
+                    <legend>Dates:</legend>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.OrderDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.OrderDate, new { htmlAttributes = new { @class = "form-control", @type="date", placeholder = "yyyy-mm-dd" } })
+                        @Html.LabelFor(model => model.OrderDate, "Order", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.OrderDate, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.OrderDate, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.PaymentDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.PaymentDate, new { htmlAttributes = new { @class = "form-control", @type = "date", placeholder = "yyyy-mm-dd" } })
+                        @Html.LabelFor(model => model.PaymentDate, "Payment", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.PaymentDate, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.PaymentDate, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.LoadingDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.LoadingDate, new { htmlAttributes = new { @class = "form-control", @type = "date", placeholder = "yyyy-mm-dd" } })
+                        @Html.LabelFor(model => model.LoadingDate, "Loading", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.LoadingDate, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.LoadingDate, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -94,21 +108,30 @@
                     <legend>More info.</legend>
                     <div class="form-group">
                         @Html.LabelFor(model => model.EmpoyeeID, "Empoyee", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.DropDownList("EmpoyeeID", null, htmlAttributes: new { @class = "form-control" })
+                        <div class="col-md-4">
+                            @{
+                                if (Model != null && Model.ID > 0)
+                                {
+                                    @Html.DropDownList("EmpoyeeID", null, htmlAttributes: new { @class = "form-control" })
+                                }
+                                else
+                                {
+                                    @Html.DropDownList("EmpoyeeID", null, "", htmlAttributes: new { @class = "form-control" })
+                                }
+                            }
                             @Html.ValidationMessageFor(model => model.EmpoyeeID, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.Transport, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
+                        <div class="col-md-4">
                             @Html.EnumDropDownListFor(model => model.Transport, htmlAttributes: new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.Transport, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.Coments, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
+                        <div class="col-md-4">
                             @Html.EditorFor(model => model.Coments, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.Coments, "", new { @class = "text-danger" })
                         </div>
@@ -116,25 +139,36 @@
 
                     
                     <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Create order" class="btn btn-success pull-right" />
+                        <div class="col-md-offset-2 col-md-4">
+                            @{
+                                if (Model != null && Model.ID > 0)
+                                {
+                                    <input type="submit" value="Update order" class="btn bg-primary" />
+                                }
+                                else
+                                {
+                                    <input type="submit" value="Create order" class="btn bg-primary" />
+                                }
+                            }
+                            
                         </div>
                     </div>
                  </fieldset>
              </div>
         </div>
        <div id="OrderDetails" class="details" >
+           <input type="hidden" id="HOrderDetailId" />
            <h4> Order items </h4>
            <div class="panel panel-info">
                <div class="panel-body">
-                   <div class="col-lg-1">
+                   <div class="col-md-1">
                        <label for="ItemGroup">Group</label><br />
                        <select id="ItemGroup" class="form-control" onchange="LoadItems(this)">
                            <option>Select</option>
                        </select>
                        <span class="error">Select item group</span>
                    </div>
-                   <div class="col-lg-1">
+                   <div class="col-md-1">
                        <label for="Item">Item</label><br />
                        <span>
                            <select id="Item" class="form-control" onchange="LoadWarehouses(this)">
@@ -143,114 +177,62 @@
                        </span>
                        <span class="error">Select item</span>
                    </div>
-                   <div class="col-lg-2">
+                   <div class="col-md-2">
                        <label for="Warehouse">Warehouse</label><br />
                        <select id="Warehouse" class="form-control">
                            <option>Select</option>
                        </select>
                        <span class="error">Select warehouse</span>
                    </div>
-                   <div class="col-lg-1">
+                   <div class="col-md-1">
                        <label for="Boxes">Boxes</label><br />
                        <input type="text" id="Boxes" class="form-control" />
                        <span class="error">Valid quantity boxes required</span>
                    </div>
-                   <div class="col-lg-1">
+                   <div class="col-md-1">
                        <label for="ReserveBoxes">Reserve</label><br />
                        <input type="text" id="ReserveBoxes" class="form-control" />
                        <span class="error">Valid quantity reserve boxes required</span>
                    </div>
-                   <div class="col-lg-1">
+                   <div class="col-md-1">
                        <label for="ExtraKg">Extra kg</label><br />
                        <input type="text" id="ExtraKg" class="form-control" />
                        <span class="error">Valid extra kg required</span>
                    </div>
-                   <div class="col-lg-1">
+                   <div class="col-md-1">
                        <label for="Price">Price/kg</label><br />
                        <input type="text" id="Price" class="form-control" />
                        <span class="error">Valid price required</span>
                    </div>
-                   <div class="col-lg-1">
+                   <div class="col-md-1">
                        <label for="ExtendedPrice">Extended price</label><br />
                        <input type="text" id="ExtendedPrice" class="form-control" disabled />
                        <span class="error">Valid extended price required</span>
                    </div>
-                   <div class="col-lg-3" valign="top">
+                   <div class="col-md-2" valign="top">
                        <br />
-                       <input id="submit" type="button" value="Add" onclick="return ValidateOrderDetails()" class="btn btn-warning" />
+                       <input id="submit" type="button" value="Add" onclick=" return ValidateOrderDetails()" class="btn bg-primary" />
                    </div>
                   </div>
                </div>
                
                <br />
-               <div >
-                       <table class="table-bordered" id="orderDetailsTable" >
-                           <thead>
-                               <tr class="alert-info " >
-                                   <td>Item</td>
-                                   <td>Warehouse</td>
-                                   <td>Boxes</td>
-                                   <td>Resereve</td>
-                                   <td>Extra kg</td>
-                                   <td>Price/kg</td>
-                                   <td>Extended price</td>
-                                   <td>Delete</td>
+               <div  id="OrderDetailsForPartial">
+                   
+                  
+                   @*@{
+                       if (Model != null && Model.OrderDetails != null)
+                       {
+                        @Html.Partial("_OrderDetails", Model.OrderDetails);
+                           
+                       }
 
-                               </tr>
-                           </thead>
-                           <tbody>
-                               @{
-
-                                   if (ViewBag.HOrderID != null)
-                                   {
-                                       foreach (var dtls in @Model.OrderDetails)
-                                       {
-                                        <tr>
-                                            <td>@dtls.Item.Name</td>
-                                            <td>@dtls.Warehouse.Name</td>
-                                            <td align="right">@dtls.QtyBoxes</td>
-                                            <td align="right">@dtls.QtyReservBoxes</td>
-                                            <td align="right">@dtls.QtyKg</td>
-                                            <td align="right">@dtls.Price</td>
-                                            <td align="right"><b>@dtls.Extended_Price</b></td>
-                                            <td>@Html.ActionLink("Delete", "DeleteOrderDetail",  new { id = dtls.ID, @class= "btn btn-danger pull-right" })</td>
-                                        </tr>
-                                       }
-                                   }
-
-                            }
-                           </tbody>
-                       </table>
-
-               </div>
-
-
+                    }*@
+                </div>
+                <div id="OrderDetailsList"> </div>
            </div>
-       
     </div>
-   
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
 <script src="~/Areas/Sale/Scripts/Order.js"></script>
 
-<style>
-  span.error {
-   display:block;
-   visibility:hidden;
-   color:red;
-   font-size:90%;
-   }
-  tr.error {
-   background-color:rgba(255,0,0,0.35);
-   
-   }
 
-</style>
-@section scripts
-{
-    @Scripts.Render("~/bundles/jqueryval")
-}

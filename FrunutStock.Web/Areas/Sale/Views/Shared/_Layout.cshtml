@@ -35,7 +35,7 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="nav navbar-nav">
                 <li class="active">
-                    @Html.ActionLink("Sale", "Index", "Home", new { area = "Sale" }, null)
+                    @Html.ActionLink("Sales", "Index", "Home", new { area = "Sale" }, null)
                 </li>
                 <li class="active">
                     @Html.ActionLink("Company", "Index", "Companies", new { area = "Sale" }, null)
@@ -43,9 +43,7 @@
                 <li class="active">
                     @Html.ActionLink("Order", "Index", "Orders", new { area = "Sale" }, null)
                 </li>
-                <li class="active">
-                    @Html.ActionLink("Order details", "Index", "OrderDetails", new { area = "Sale" }, null)
-                </li>
+               
                 <li>
                     <p>
                         <a href="@Url.Action("logout", "auth")"><img src="~/Content/Images/ShutDown.jpg" width="25px" height="25px" alt="Log out" style="vertical-align:middle" /> </a>

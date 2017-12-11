@@ -1,0 +1,46 @@
+﻿@model IEnumerable<FrunutStock.Model.Models.OrderDetail>
+
+      <div class="panel panel-primary">
+          <div class="panel-heading">
+              <div class="row  bg-primary">
+                  <div class="col-md-1"><b>Item</b></div>
+                  <div class="col-md-1"><b>Warehouse</b></div>
+                  <div class="col-md-1" align="right"><b>Boxes</b></div>
+                  <div class="col-md-1" align="right"><b>Reserve</b></div>
+                  <div class="col-md-1" align="right"><b>Extra kg</b></div>
+                  <div class="col-md-1" align="right"><b>Price/kg</b></div>
+                  <div class="col-md-1" align="right"><b>Extended price</b></div>
+                  <div class="col-md-1"></div>
+                  <div class="col-md-1"></div>
+                  <div class="col-md-1"></div>
+                  <div class="col-md-1"></div>
+
+              </div>
+          </div>
+          <div class="col-md-12">
+
+
+              @foreach (var dtls in Model)
+              {
+                <div class="panel-body">
+
+                    <div class="row">
+                        <div class="col-md-1">@dtls.Item.Name</div>
+                        <div class="col-md-1">@dtls.Warehouse.Name</div>
+                        <div class="col-md-1" align="right">@dtls.QtyBoxes</div>
+                        <div class="col-md-1" align="right">@dtls.QtyReservBoxes</div>
+                        <div class="col-md-1" align="right">@dtls.QtyKg</div>
+                        <div class="col-md-1" align="right">@dtls.Price</div>
+                        <div class="col-md-1" align="right"><b>@dtls.Extended_Price</b></div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1">@Html.ActionLink("Edit", "DeleteOrderDetail", new { id = dtls.ID })</div>
+                        <div class="col-md-1">@Html.ActionLink("Delete", "DeleteOrderDetail", new { id = dtls.ID })</div>
+                    </div>
+                </div>
+              }
+
+          </div>
+
+      </div>
+   
+

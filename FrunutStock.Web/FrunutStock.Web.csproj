@@ -203,6 +203,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Sale\Css\sales.css" />
     <Content Include="Areas\Sale\Scripts\Order.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -413,6 +414,8 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Areas\Sale\Views\Orders\_OrderDetails.cshtml" />
+    <Content Include="Areas\Stock\Views\ReceiveItems\Index.cshtml" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
@@ -462,12 +465,12 @@
     <Compile Include="Areas\Sale\Controllers\OrderDetailsController.cs" />
     <Compile Include="Areas\Sale\Controllers\OrdersController.cs" />
     <Compile Include="Areas\Sale\SaleAreaRegistration.cs" />
-    <Compile Include="Areas\Stock\Controllers\AddItemsController.cs" />
     <Compile Include="Areas\Stock\Controllers\CountriesController.cs" />
     <Compile Include="Areas\Stock\Controllers\HomeController.cs" />
     <Compile Include="Areas\Stock\Controllers\ItemGroupsController.cs" />
     <Compile Include="Areas\Stock\Controllers\ItemsController.cs" />
     <Compile Include="Areas\Stock\Controllers\ItemWarehousesController.cs" />
+    <Compile Include="Areas\Stock\Controllers\ReceiveItemsController.cs" />
     <Compile Include="Areas\Stock\Controllers\WarehousesController.cs" />
     <Compile Include="Areas\Stock\StockAreaRegistration.cs" />
     <Compile Include="Controllers\AuthController.cs" />
@@ -476,10 +479,6 @@
     <Compile Include="FilterConfig.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711081928385_init.cs" />
-    <Compile Include="Migrations\201711081928385_init.Designer.cs">
-      <DependentUpon>201711081928385_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppUser.cs" />
@@ -541,11 +540,6 @@
       <Project>{28601dd1-976d-4ccc-b62e-1140c3a9cc5d}</Project>
       <Name>FrunutStock.Service</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201711081928385_init.resx">
-      <DependentUpon>201711081928385_init.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

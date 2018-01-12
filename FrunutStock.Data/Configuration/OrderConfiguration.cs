@@ -37,6 +37,10 @@ namespace FrunutStock.Data.Configuration
                 .WithMany(x => x.Orders)
                 .HasForeignKey(y => y.EmpoyeeID);
 
+            HasMany<OrderDetail>(o => o.OrderDetails)
+                  .WithRequired(d => d.Order)
+             .WillCascadeOnDelete();
+
 
 
 

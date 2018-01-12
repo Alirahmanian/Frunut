@@ -15,4 +15,23 @@ select,
 textarea {
     max-width: 280px;
 }
+/*Bootstrap overrides*/
+.navbar-inverse {
+    background-color: beige;
+    border-color: #080808;
+}
+.navbar-nav > li > a {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    line-height: 20px;
+    color:black;
+}
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
+    color: red;
+    background-color: beige;
+}
 
+.form-control
+{
+    font-size: 18px;
+}

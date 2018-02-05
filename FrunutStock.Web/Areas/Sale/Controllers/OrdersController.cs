@@ -108,7 +108,6 @@ namespace FrunutStock.Web.Areas.Sale.Controllers
                 ViewBag.EmpoyeeID = new SelectList(employeeService.GetEmployees(null), "ID", "FullName", order.EmpoyeeID);
                 return View(order);
                
-                //return RedirectToAction("Index");
             }
             
             ViewBag.CompanyID = new SelectList(companyService.GetCompanies(null), "ID", "Name", order.CompanyID);
@@ -187,7 +186,45 @@ namespace FrunutStock.Web.Areas.Sale.Controllers
             base.Dispose(disposing);
         }
 
+        public JsonResult GetItemsByGroupID(Int64 groupId)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            var items = new List<Item>();
+            items = db.Items.Where(a => a.ItemGroupID == groupId).OrderBy(a => a.Name).ToList();
+            db.Configuration.ProxyCreationEnabled = true;
+            return new JsonResult { Data = items, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        public JsonResult GetItemWarehousesByItemID(Int64 itemId)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            var itemWarehouse = (from iw in db.ItemWarehouses
+                                 join i in db.Items on iw.ItemID equals i.ID
+                                 join w in db.Warehouses on iw.WarehouseID equals w.ID
+                                 orderby w.Name
+                                 select new {
+                                    ItemWarehouseID = iw.ID,
+                                    ItemsonHand = w.Name + "|Box: " + iw.QtyBoxesOnhand.ToString() + "|Extra: " + iw.QtyKgOnhand.ToString() + "|Res. " +  iw.QtyBoxesReserved.ToString()
+                                  }
+                                );
+            db.Configuration.ProxyCreationEnabled = true;
+            return new JsonResult { Data = itemWarehouse, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
         
+        public PartialViewResult GetOrderDetails(int id = 0)
+        {
+            var orderDetails = db.OrderDetails.Where(d => d.OrderID == id).Include(i=> i.Item).Include(w=> w.Warehouse);
+          
+            return PartialView("_OrderDetails", orderDetails);
+        }
+
+        public JsonResult GetOrderDetailsForAjax(int id = 0)
+        {
+            var orderDetails = db.OrderDetails.Where(d => d.OrderID == id).Include(i => i.Item).Include(w => w.Warehouse);
+
+            return new JsonResult { Data = orderDetails, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+        #endregion
 
     }
 }

@@ -45,7 +45,6 @@ namespace FrunutStock.BL.Stock
                 }
                 catch (Exception err)
                 {
-                   // UpdateItemWarehouse(itemWarehouse, addItem, -1);
                     dbContextTransaction.Rollback();
                     result = false;
                 }
@@ -64,8 +63,6 @@ namespace FrunutStock.BL.Stock
                 {
                     if (oldReceiveItem == null)
                     {
-                        //dbContextTransaction.Rollback();
-                        //result = false;
                         throw new System.InvalidOperationException("Could't find old values.");
                     }
 
@@ -121,8 +118,6 @@ namespace FrunutStock.BL.Stock
                 {
                     if (oldReceiveItem == null)
                     {
-                        //dbContextTransaction.Rollback();
-                        //result = false;
                         throw new System.InvalidOperationException("Could't find old values.");
                     }
 

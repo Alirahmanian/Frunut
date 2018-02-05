@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using FrunutStock.Model.Validators;
 
 namespace FrunutStock.Model.Models
 {

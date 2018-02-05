@@ -4,6 +4,11 @@
     ViewBag.Title = "Create";
 }
 
+@helper LabelWithMarkRazor(string content)
+{
+    <label><mark>@content</mark></label>
+}
+@LabelWithMarkRazor("My custom razor helper")
 <h2>Create</h2>
 <script src="~/Scripts/jquery-3.1.1.js"></script>
 <link href="~/css/Site.css" rel="stylesheet" />
@@ -13,7 +18,7 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal" style="margin:10px;">
-        <h4>Order</h4>
+        <span class="glyphicon glyphicon-hand-left"></span>  @Html.ActionLink("Back to List", "Index") <h3>Order</h3>
         @{
             if (ViewBag.HOrderID != null)
             {
@@ -230,9 +235,7 @@
                 
 
            </div>
-       
     </div>
-   
 }
 
 

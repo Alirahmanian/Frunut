@@ -45,8 +45,6 @@ function LoadItems(ItemGroup) {
 //=======================================
 //=======================================
 function LoadWarehouses(Item) {
-
-
     $.ajax({
         type: "GET",
         url: "/OrderAjax/GetItemWarehousesByItemID",
@@ -146,7 +144,7 @@ function renderItems(element, data) {
       function (i, val) {
           $ele.append($('<option/>').val(val.ID).text(val.Name));
       }
-     )
+   )
 }
 //=======================================
 //=======================================
@@ -279,9 +277,8 @@ function saveOrderDetailsRow()
         QtyKg: $('#ExtraKg').val(),
         Price: parseFloat($("#Price").val()),
         Extended_Price: parseFloat($("#ExtendedPrice").val())
-        
-        
     }
+
     if (orderItem.OrderID !== "" && orderItem.OrderID !== "0" ){
         $.ajax({
             type: "Post",

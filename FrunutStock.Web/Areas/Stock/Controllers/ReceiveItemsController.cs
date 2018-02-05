@@ -48,8 +48,6 @@ namespace FrunutStock.Web.Areas.Stock.Controllers
         }
 
         // POST: Stock/AddItems/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Date,ItemID,WarehouseID,CompanyID,Description,QtyBoxes,QtyKg,AddedDate,UserName")] ReceiveItem addItem)
@@ -85,8 +83,6 @@ namespace FrunutStock.Web.Areas.Stock.Controllers
         }
 
         // POST: Stock/AddItems/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,Date,ItemID,WarehouseID,Description,QtyBoxes,QtyKg,AddedDate,ModifiedDate,UserName")] ReceiveItem addItem)

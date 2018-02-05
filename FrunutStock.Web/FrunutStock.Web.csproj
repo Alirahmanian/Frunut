@@ -448,6 +448,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppDbContext.cs" />
+    <Content Include="App_Code\HtmlExtensionMethods.cs" />
+    <Content Include="App_Code\HtmlHelpers.cs" />
     <Compile Include="App_Start\Bootstrapper.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -469,6 +471,7 @@
     <Compile Include="Areas\Sale\Controllers\OrderAjaxController.cs" />
     <Compile Include="Areas\Sale\Controllers\OrderDetailsController.cs" />
     <Compile Include="Areas\Sale\Controllers\OrdersController.cs" />
+    <Compile Include="Areas\Sale\Models\CustomValidator.cs" />
     <Compile Include="Areas\Sale\SaleAreaRegistration.cs" />
     <Compile Include="Areas\Stock\Controllers\ReceiveItemsController.cs" />
     <Compile Include="Areas\Stock\Controllers\CountriesController.cs" />
@@ -476,6 +479,7 @@
     <Compile Include="Areas\Stock\Controllers\ItemGroupsController.cs" />
     <Compile Include="Areas\Stock\Controllers\ItemsController.cs" />
     <Compile Include="Areas\Stock\Controllers\ItemWarehousesController.cs" />
+    <Compile Include="Areas\Stock\Controllers\ReceiveItemsController.cs" />
     <Compile Include="Areas\Stock\Controllers\WarehousesController.cs" />
     <Compile Include="Areas\Stock\StockAreaRegistration.cs" />
     <Compile Include="Controllers\AuthController.cs" />
@@ -531,7 +535,6 @@
     <Folder Include="Areas\Accountment\Models\" />
     <Folder Include="Areas\Management\Models\" />
     <Folder Include="Areas\Purchase\Models\" />
-    <Folder Include="Areas\Sale\Models\" />
     <Folder Include="Areas\Stock\Models\" />
     <Folder Include="ViewModels\" />
   </ItemGroup>

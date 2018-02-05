@@ -224,7 +224,7 @@ namespace FrunutStock.Web.Areas.Sale.Controllers
 
             return new JsonResult { Data = orderDetails, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
-        #endregion
+       
 
     }
 }

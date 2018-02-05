@@ -163,6 +163,9 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Owin.5.2.3\lib\net45\System.Web.Http.Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
       <Private>True</Private>
@@ -203,12 +206,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Sale\Css\sales.css" />
     <Content Include="Areas\Sale\Scripts\Order.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\Images\Delete.png" />
+    <Content Include="Content\Images\Edit.png" />
+    <Content Include="Content\Images\FruNutLogo.jpg" />
+    <Content Include="Content\Images\logoTransBG.jpg" />
+    <Content Include="Content\Images\LogOut.jpg" />
+    <Content Include="Content\Images\ShutDown.jpg" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
@@ -297,11 +307,6 @@
     <Content Include="Areas\Stock\Views\Warehouses\Details.cshtml" />
     <Content Include="Areas\Stock\Views\Warehouses\Edit.cshtml" />
     <Content Include="Areas\Stock\Views\Warehouses\Index.cshtml" />
-    <Content Include="Areas\Stock\Views\AddItems\Create.cshtml" />
-    <Content Include="Areas\Stock\Views\AddItems\Delete.cshtml" />
-    <Content Include="Areas\Stock\Views\AddItems\Details.cshtml" />
-    <Content Include="Areas\Stock\Views\AddItems\Edit.cshtml" />
-    <Content Include="Areas\Stock\Views\AddItems\Index.cshtml" />
     <Content Include="Areas\Stock\Views\Countries\Create.cshtml" />
     <Content Include="Areas\Stock\Views\Countries\Delete.cshtml" />
     <Content Include="Areas\Stock\Views\Countries\Details.cshtml" />
@@ -413,6 +418,8 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Areas\Stock\Views\ReceiveItems\Index.cshtml" />
+    <Content Include="Areas\Sale\Views\Orders\_OrderDetails.cshtml" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
@@ -459,10 +466,11 @@
     <Compile Include="Areas\Purchase\PurchaseAreaRegistration.cs" />
     <Compile Include="Areas\Sale\Controllers\CompaniesController.cs" />
     <Compile Include="Areas\Sale\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Sale\Controllers\OrderAjaxController.cs" />
     <Compile Include="Areas\Sale\Controllers\OrderDetailsController.cs" />
     <Compile Include="Areas\Sale\Controllers\OrdersController.cs" />
     <Compile Include="Areas\Sale\SaleAreaRegistration.cs" />
-    <Compile Include="Areas\Stock\Controllers\AddItemsController.cs" />
+    <Compile Include="Areas\Stock\Controllers\ReceiveItemsController.cs" />
     <Compile Include="Areas\Stock\Controllers\CountriesController.cs" />
     <Compile Include="Areas\Stock\Controllers\HomeController.cs" />
     <Compile Include="Areas\Stock\Controllers\ItemGroupsController.cs" />
@@ -477,9 +485,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201711081928385_init.cs" />
-    <Compile Include="Migrations\201711081928385_init.Designer.cs">
-      <DependentUpon>201711081928385_init.cs</DependentUpon>
+    <Compile Include="Migrations\201712031205549_relations.cs" />
+    <Compile Include="Migrations\201712031205549_relations.Designer.cs">
+      <DependentUpon>201712031205549_relations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712031358547_FixingItemOrderdetails.cs" />
+    <Compile Include="Migrations\201712031358547_FixingItemOrderdetails.Designer.cs">
+      <DependentUpon>201712031358547_FixingItemOrderdetails.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppUser.cs" />
@@ -521,7 +533,6 @@
     <Folder Include="Areas\Purchase\Models\" />
     <Folder Include="Areas\Sale\Models\" />
     <Folder Include="Areas\Stock\Models\" />
-    <Folder Include="Content\Images\" />
     <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
@@ -543,8 +554,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201711081928385_init.resx">
-      <DependentUpon>201711081928385_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201712031205549_relations.resx">
+      <DependentUpon>201712031205549_relations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712031358547_FixingItemOrderdetails.resx">
+      <DependentUpon>201712031358547_FixingItemOrderdetails.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

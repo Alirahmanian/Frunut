@@ -17,7 +17,7 @@ namespace FrunutStock.BL.General
             var tables = db.Database.SqlQuery<string>("Select OBJECT_NAME(parent_object_Id) from sys.foreign_keys where object_name(referenced_object_id) = '" + tableName + "'").ToList();
             foreach (var table in tables)
             {
-                var related = db.Database.SqlQuery<Int64>("select " + foreignKeyName + " from " + table + " where " + foreignKeyName + " = " + id + "").FirstOrDefault();
+                var related = db.Database.SqlQuery<Int64>("select " + foreignKeyName + " from " + table + " where " + foreignKeyName + " = " + id + "").Count();//.FirstOrDefault();
                 if (related > 0)
                     return true;
 

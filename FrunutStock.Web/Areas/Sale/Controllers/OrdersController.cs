@@ -8,28 +8,45 @@ using System.Web;
 using System.Web.Mvc;
 using FrunutStock.Data;
 using FrunutStock.Model.Models;
+using FrunutStock.Service.Validations;
+using FrunutStock.Service;
 
 namespace FrunutStock.Web.Areas.Sale.Controllers
 {
     public class OrdersController : Controller
     {
-        private FrunutStockEntities db = new FrunutStockEntities();
+        private readonly IOrderService orderService;
+        private readonly ICompanyService companyService;
+        private readonly IEmployeeService employeeService;
+        
+        // private FrunutStockEntities db = new FrunutStockEntities();
+        //private OrderDetailsValidation orderDetailsValidation = new OrderDetailsValidation();
 
+
+        public OrdersController(IOrderService orderService, ICompanyService companyService, IEmployeeService employeeService)
+        {
+            this.orderService = orderService;
+            this.companyService = companyService;
+            this.employeeService = employeeService;
+        }
+       
         // GET: Sale/Orders
         public ActionResult Index()
         {
-            var orders = db.Orders.Include(o => o.Company).Include(o => o.Employee);
+            IEnumerable<Order> orders = orderService.GetOrders(null);
+           // var orders = db.Orders.Include(o => o.Company).Include(o => o.Employee);
             return View(orders.ToList());
         }
 
         // GET: Sale/Orders/Details/5
-        public ActionResult Details(long? id)
+        public ActionResult Details(Int64? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Order order = db.Orders.Find(id);
+            var orderId = id ?? 0;
+            Order order = orderService.GetOrder(orderId);
             if (order == null)
             {
                 return HttpNotFound();
@@ -38,15 +55,16 @@ namespace FrunutStock.Web.Areas.Sale.Controllers
         }
 
         // GET: Sale/Orders/Create
-        public ActionResult Create(long? id)
+        public ActionResult Create(Int64? id)
         {
             
-            ViewBag.CompanyID = new SelectList(db.Companies, "ID", "Name");
-            ViewBag.EmpoyeeID = new SelectList(db.Employees, "ID", "FirstName");
+            ViewBag.CompanyID = new SelectList(companyService.GetCompanies(null), "ID", "Name");
+            ViewBag.EmpoyeeID = new SelectList(employeeService.GetEmployees(null), "ID", "FullName");
             if (id != null)
             {
-                Order order = db.Orders.Find(id);
-                order.OrderDetails = db.OrderDetails.Where(o => o.OrderID == order.ID).ToList();
+                var orderId = id ?? 0;
+                var order = orderService.GetOrder(orderId);//.Include(o => o.Company).Include(o => o.Employee).Where(o => o.ID == id).First();
+               // order.OrderDetails = db.OrderDetails.Include(i => i.Item).Include(w => w.Warehouse).ToList();
                 if (order != null)
                 {
                     ViewBag.OrderID = order.ID;
@@ -58,23 +76,20 @@ namespace FrunutStock.Web.Areas.Sale.Controllers
         }
 
         // POST: Sale/Orders/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,CompanyID,EmpoyeeID,OrderDate,PaymentDate,LoadingDate,Coments,OrderdBy,Transport,Cash")] Order order)
         {
-            //Include = "ID,CompanyID,EmpoyeeID,AmountItem,AmountReserve,TotalPrice,OrderDate,PaymentDate,PaidDate,LoadingDate,LoadedDate,AmountPaid,Coments,OrderdBy,Transport,PaymentWarning,ForcedPaid,OrderPaid,Cash,AddedDate,ModifiedDate,UserName")
             if (ModelState.IsValid )
             {
                 if (!String.IsNullOrEmpty(Request["HOrderID"]) )
                 {
-                    db.Entry(order).State = EntityState.Modified;
-                    db.SaveChanges();
+                    orderService.CreateOrder(order);//.Entry(order).State = EntityState.Modified;
+                    orderService.SaveOrder();
                     ViewBag.OrderID = order.ID;
                     ViewBag.HOrderID = order.ID;
-                    ViewBag.CompanyID = new SelectList(db.Companies, "ID", "Name", order.CompanyID);
-                    ViewBag.EmpoyeeID = new SelectList(db.Employees, "ID", "FirstName", order.EmpoyeeID);
+                    ViewBag.CompanyID = new SelectList(companyService.GetCompanies(null), "ID", "Name", order.CompanyID);
+                    ViewBag.EmpoyeeID = new SelectList(employeeService.GetEmployees(null), "ID", "FUllName", order.EmpoyeeID);
                     return View(order);
                 }
                 
@@ -84,70 +99,66 @@ namespace FrunutStock.Web.Areas.Sale.Controllers
                 order.Coments = order.Coments != null ? order.Coments.Trim() : "";
                 order.Coments += "_" + order.OrderDate.ToShortDateString();
                 //order.PaidDate = null;
-               // order.LoadedDate = null;
-                db.Orders.Add(order);
-                db.SaveChanges();
+                // order.LoadedDate = null;
+                orderService.CreateOrder(order);
+                orderService.SaveOrder();
                 ViewBag.OrderID = order.ID;
                 ViewBag.HOrderID = order.ID;
-                ViewBag.CompanyID = new SelectList(db.Companies, "ID", "Name", order.CompanyID);
-                ViewBag.EmpoyeeID = new SelectList(db.Employees, "ID", "FirstName", order.EmpoyeeID);
+                ViewBag.CompanyID = new SelectList(companyService.GetCompanies(null), "ID", "Name", order.CompanyID);
+                ViewBag.EmpoyeeID = new SelectList(employeeService.GetEmployees(null), "ID", "FullName", order.EmpoyeeID);
                 return View(order);
                
                 //return RedirectToAction("Index");
             }
             
-            ViewBag.CompanyID = new SelectList(db.Companies, "ID", "Name", order.CompanyID);
-            ViewBag.EmpoyeeID = new SelectList(db.Employees, "ID", "FirstName", order.EmpoyeeID);
+            ViewBag.CompanyID = new SelectList(companyService.GetCompanies(null), "ID", "Name", order.CompanyID);
+            ViewBag.EmpoyeeID = new SelectList(employeeService.GetEmployees(null), "ID", "FullName", order.EmpoyeeID);
             return View(order);
         }
 
         // GET: Sale/Orders/Edit/5
-        public ActionResult Edit(long? id)
+        public ActionResult Edit(Int64? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Order order = db.Orders.Find(id);
-            order.OrderDetails = db.OrderDetails.Where(o => o.OrderID == order.ID).ToList();
-            
-
+            var orderId = id ?? 0;
+            Order order = orderService.GetOrder(orderId);
             if (order == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.CompanyID = new SelectList(db.Companies, "ID", "Name", order.CompanyID);
-            ViewBag.EmpoyeeID = new SelectList(db.Employees, "ID", "FirstName", order.EmpoyeeID);
+            ViewBag.CompanyID = new SelectList(companyService.GetCompanies(null), "ID", "Name", order.CompanyID);
+            ViewBag.EmpoyeeID = new SelectList(employeeService.GetEmployees(null), "ID", "FullName", order.EmpoyeeID);
             return View(order);
         }
 
         // POST: Sale/Orders/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,CompanyID,EmpoyeeID,AmountItem,AmountReserve,TotalPrice,OrderDate,PaymentDate,PaidDate,LoadingDate,LoadedDate,AmountPaid,Coments,OrderdBy,Transport,PaymentWarning,ForcedPaid,OrderPaid,Cash,AddedDate,ModifiedDate,UserName")] Order order)
         {
-            //Include = "ID,CompanyID,EmpoyeeID,AmountItem,AmountReserve,TotalPrice,OrderDate,PaymentDate,PaidDate,LoadingDate,LoadedDate,AmountPaid,Coments,OrderdBy,Transport,PaymentWarning,ForcedPaid,OrderPaid,Cash,AddedDate,ModifiedDate,UserName")
             if (ModelState.IsValid)
             {
-                db.Entry(order).State = EntityState.Modified;
-                db.SaveChanges();
+                orderService.UpdateOrder(order);
+                orderService.SaveOrder();
                 return RedirectToAction("Index");
             }
-            ViewBag.CompanyID = new SelectList(db.Companies, "ID", "Name", order.CompanyID);
-            ViewBag.EmpoyeeID = new SelectList(db.Employees, "ID", "FirstName", order.EmpoyeeID);
+            ViewBag.CompanyID = new SelectList(companyService.GetCompanies(null), "ID", "Name", order.CompanyID);
+            ViewBag.EmpoyeeID = new SelectList(employeeService.GetEmployees(null), "ID", "FirstName", order.EmpoyeeID);
             return View(order);
         }
 
         // GET: Sale/Orders/Delete/5
-        public ActionResult Delete(long? id)
+        public ActionResult Delete(Int64? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Order order = db.Orders.Find(id);
+            var orderId = id ?? 0;
+            Order order = orderService.GetOrder(orderId);
             if (order == null)
             {
                 return HttpNotFound();
@@ -158,11 +169,11 @@ namespace FrunutStock.Web.Areas.Sale.Controllers
         // POST: Sale/Orders/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(long id)
+        public ActionResult DeleteConfirmed(Int64 id)
         {
-            Order order = db.Orders.Find(id);
-            db.Orders.Remove(order);
-            db.SaveChanges();
+            Order order = orderService.GetOrder(id);
+            orderService.DeleteOrder(order);
+            orderService.SaveOrder();
             return RedirectToAction("Index");
         }
 
@@ -170,82 +181,13 @@ namespace FrunutStock.Web.Areas.Sale.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                //db.Dispose();
+                
             }
             base.Dispose(disposing);
         }
 
-        #region
-        //JQuery Ajax calls go
-        public JsonResult SaveOrderdetailsRow(OrderDetail orderDetail)
-        {
-            bool status = false;
-            OrderDetail savedOrderRow = null; 
-            try
-            {
-                ItemWarehouse itemWareHouse = db.ItemWarehouses.Find(orderDetail.WarehouseID);
-                Order order = db.Orders.Find(orderDetail.OrderID);
-                if (order != null && itemWareHouse != null)
-                {
+        
 
-                    orderDetail.WarehouseID = itemWareHouse.WarehouseID;
-                    db.OrderDetails.Add(orderDetail);
-                    db.SaveChanges();
-                    order.TotalPrice += orderDetail.Extended_Price;
-                    db.Entry(order).State = EntityState.Modified;
-                    db.SaveChanges();
-                    savedOrderRow = order.OrderDetails.Where(od => od == orderDetail).FirstOrDefault();
-                    if (savedOrderRow != null)
-                    status = true;
-                }
-               
-            }
-            catch(Exception e)
-            {
-
-            }
-            return new JsonResult
-            {
-                Data = new { status = status }
-            };
-            
-        }
-        public JsonResult GetItemGroups()
-        {
-            db.Configuration.ProxyCreationEnabled = false;
-            List<ItemGroup> itemGroups = new List<ItemGroup>();
-           itemGroups = db.ItemGroups.OrderBy(a => a.Name).ToList();
-            db.Configuration.ProxyCreationEnabled = true;
-            return new JsonResult { Data = itemGroups, JsonRequestBehavior = JsonRequestBehavior.AllowGet};
-        }
-
-        public JsonResult GetItemsByGroupID(Int64 groupId)
-        {
-            db.Configuration.ProxyCreationEnabled = false;
-            List<Item> items = new List<Item>();
-            items = db.Items.Where(a => a.ItemGroupID == groupId).OrderBy(a => a.Name).ToList();
-            db.Configuration.ProxyCreationEnabled = true;
-            return new JsonResult { Data = items, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-        }
-
-        public JsonResult GetItemWarehousesByItemID(Int64 itemId)
-        {
-            db.Configuration.ProxyCreationEnabled = false;
-            // List<ItemWarehouse> itemWarehouse = new List<ItemWarehouse>();
-            var itemWarehouse = (from iw in db.ItemWarehouses
-                                 join i in db.Items on iw.ItemID equals i.ID
-                                 join w in db.Warehouses on iw.WarehouseID equals w.ID
-                                 orderby w.Name
-                                 select new {
-                                    ItemWarehouseID = iw.ID,
-                                    ItemsonHand = w.Name + "|Box: " + iw.QtyBoxesOnhand.ToString() + "|Extra: " + iw.QtyKgOnhand.ToString() + "|Res. " +  iw.QtyBoxesReserved.ToString()
-                                  }
-                                );
-            // itemWarehouse = db.ItemWarehouses.Where(a => a.ItemID == itemId).OrderBy(a => a.Warehouse.Name).ToList();
-            db.Configuration.ProxyCreationEnabled = true;
-            return new JsonResult { Data = itemWarehouse, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-        }
-        #endregion
-       
     }
 }

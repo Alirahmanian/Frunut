@@ -20,13 +20,17 @@ namespace FrunutStock.Model.Models
 
         public Int64 ItemGroupID { get; set; }
         [Display(Name = "Item group")]
-        public ItemGroup ItemGroup { get; set; }
+       
         public Int64 CountryID { get; set; }
         [Display(Name = "Country")]
         public Country Country { get; set; }
 
-        public ICollection<OrderDetail> OrderDetails { get; set; }
-        public ICollection<AddItem> AddItems { get; set; }
+
+        //nav.
+        public ItemGroup ItemGroup { get; set; }
+       // public ICollection<OrderDetail> OrderDetails { get; set; }
+       //public ICollection<Warehouse> WareHouses { get; set; }
+        public ICollection<ReceiveItem> ReceiveItems { get; set; }
     }
   
 }

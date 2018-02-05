@@ -12,7 +12,7 @@ using FrunutStock.BL.Stock;
 
 namespace FrunutStock.Web.Areas.Stock.Controllers
 {
-    public class AddItemsController : Controller
+    public class ReceiveItemsController : Controller
     {
         private FrunutStockEntities db = new FrunutStockEntities();
         private ItemInOut itemInout = new ItemInOut();
@@ -20,8 +20,8 @@ namespace FrunutStock.Web.Areas.Stock.Controllers
         // GET: Stock/AddItems
         public ActionResult Index()
         {
-            var addItems = db.AddItems.Include(a => a.Item).Include(a => a.Warehouse);
-            return View(addItems.ToList());
+            var receiveItems = db.ReceiveItems.Include(a => a.Item).Include(a => a.Warehouse).Include(a => a.Company);
+            return View(receiveItems.ToList());
         }
 
         // GET: Stock/AddItems/Details/5
@@ -31,7 +31,7 @@ namespace FrunutStock.Web.Areas.Stock.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AddItem addItem = db.AddItems.Find(id);
+            ReceiveItem addItem = db.ReceiveItems.Find(id);
             if (addItem == null)
             {
                 return HttpNotFound();
@@ -52,12 +52,12 @@ namespace FrunutStock.Web.Areas.Stock.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Date,ItemID,WarehouseID,Description,QtyBoxes,QtyKg,AddedDate,ModifiedDate,UserName")] AddItem addItem)
+        public ActionResult Create([Bind(Include = "ID,Date,ItemID,WarehouseID,CompanyID,Description,QtyBoxes,QtyKg,AddedDate,UserName")] ReceiveItem addItem)
         {
             if (ModelState.IsValid)
             {
                // db.AddItems.Add(addItem);
-                bool result = itemInout.CreateAddItem(db, addItem);
+                bool result = itemInout.CreateReceiveItem(db, addItem);
                 //db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -74,7 +74,7 @@ namespace FrunutStock.Web.Areas.Stock.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AddItem addItem = db.AddItems.Find(id);
+            ReceiveItem addItem = db.ReceiveItems.Find(id);
             if (addItem == null)
             {
                 return HttpNotFound();
@@ -89,11 +89,11 @@ namespace FrunutStock.Web.Areas.Stock.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Date,ItemID,WarehouseID,Description,QtyBoxes,QtyKg,AddedDate,ModifiedDate,UserName")] AddItem addItem)
+        public ActionResult Edit([Bind(Include = "ID,Date,ItemID,WarehouseID,Description,QtyBoxes,QtyKg,AddedDate,ModifiedDate,UserName")] ReceiveItem addItem)
         {
             if (ModelState.IsValid)
             {
-                bool result = itemInout.EditAddItem(db, addItem);
+                bool result = itemInout.EditReceiveItem(db, addItem);
                 //db.Entry(addItem).State = EntityState.Modified;
                 //db.SaveChanges();
                 return RedirectToAction("Index");
@@ -110,7 +110,7 @@ namespace FrunutStock.Web.Areas.Stock.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AddItem addItem = db.AddItems.Find(id);
+            ReceiveItem addItem = db.ReceiveItems.Find(id);
             if (addItem == null)
             {
                 return HttpNotFound();
@@ -123,8 +123,8 @@ namespace FrunutStock.Web.Areas.Stock.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            AddItem addItem = db.AddItems.Find(id);
-            bool result = itemInout.DeleteAddItem(db, addItem);
+            ReceiveItem addItem = db.ReceiveItems.Find(id);
+            bool result = itemInout.DeleteReceiveItem(db, addItem);
             //db.AddItems.Remove(addItem);
             //db.SaveChanges();
             return RedirectToAction("Index");

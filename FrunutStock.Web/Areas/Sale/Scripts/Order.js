@@ -1,21 +1,18 @@
 ﻿var ItemGroups = []
-//fetch categories from database
+
 //=======================================
 //=======================================
 function LoadItemGroups(element)
 {
-    
     if (ItemGroups.length === 0)
     {
-        //ajax function for fetch data
         $.ajax
             ({
                 type: "GET",
-                url: '/Orders/GetItemGroups',
+                url: '/OrderAjax/GetItemGroups',
                 success: function (data)
                 {
                     ItemGroups = data;
-                  //render catagory
                   renderItemGroups(element);
                 },
                 error: function (xhr, status, error) {
@@ -26,7 +23,6 @@ function LoadItemGroups(element)
    }
    else
    {
-      //render itemgroups to the element
         renderItemGroups(element);
    }
 }
@@ -35,10 +31,10 @@ function LoadItemGroups(element)
 function LoadItems(ItemGroup) {
   $.ajax({
           type: "GET",
-          url: "/Orders/GetItemsByGroupID",
+          url: "/OrderAjax/GetItemsByGroupID",
           data: { 'groupId': $(ItemGroup).val() },
           success: function (data) {
-          //render items to appropriate dropdown
+          
               renderItems($('#Item'), data);
          },
          error: function (error) {
@@ -53,16 +49,78 @@ function LoadWarehouses(Item) {
 
     $.ajax({
         type: "GET",
-        url: "/Orders/GetItemWarehousesByItemID",
+        url: "/OrderAjax/GetItemWarehousesByItemID",
         data: { 'itemId': $(Item).val() },
         success: function (data) {
-            //render warehouse to appropriate dropdown
             renderWarehouses($('#Warehouse'), data);
         },
         error: function (error) {
             console.log(error);
         }
     })
+}
+//=======================================
+//=======================================
+function LoadOrderDetails(Order) {
+
+    if ($("#HOrderID").val() !== "")
+    {
+        $.ajax({
+            type: "GET",
+            url: "/OrderAjax/GetOrderDetailsForAjax",
+            data: { 'Id': $("#HOrderID").val() },
+            success: function (data) {
+                renderOrderDetails($('#OrderDetailsList'), data);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        })
+    }
+}
+//=======================================
+//=======================================
+function renderOrderDetails(element, data) {
+    var OrderTotalPrice = 0;
+    var rowCounter = 0;
+    var $ele = $(element);
+    $ele.empty();
+   
+    $ele.append('<div class=" col-md-10  ">');
+    $ele.append('<div class="row">');
+    $ele.append('<div class="col-md-1"><b>Item</b></div>');
+    $ele.append('<div class="col-md-1"><b>Warehouse</b></div>');
+    $ele.append('<div class="col-md-1" align="right"><b>Boxes</b></div>');
+    $ele.append('<div class="col-md-1" align="right"><b>Reserve</b></div>');
+    $ele.append('<div class="col-md-1" align="right"><b>Extra kg</b></div>');
+    $ele.append('<div class="col-md-1" align="right"><b>Price/kg</b></div>');
+    $ele.append('<div class="col-md-1" align="right"><b>Ext. price</b></div>');
+    $ele.append('<div class="col-md-1"><b></b></div>');
+    $ele.append('</div>');
+    
+    $.each(data,
+        function (i, val) {
+            OrderTotalPrice += val.Extended_Price;
+            rowCounter++;
+            if (rowCounter % 2 > 0) {
+                $ele.append('<div class="row" style=" background-color: ghostwhite;">');
+            } else {
+                $ele.append('<div class="row">');
+            }
+            $ele.append('<div class="col-md-1">' + val.Item.Name.trim() + '</div>');
+            $ele.append('<div class="col-md-1">' + val.Warehouse.Name.trim() + '</div>');
+            $ele.append('<div class="col-md-1" align="right">' + val.QtyBoxes + '</div>');
+            $ele.append('<div class="col-md-1" align="right">' + val.QtyReservBoxes + '</div>');
+            $ele.append('<div class="col-md-1" align="right">' + val.QtyKg + '</div>');
+            $ele.append('<div class="col-md-1" align="right">' + val.Price + '</div>');
+            $ele.append('<div class="col-md-1" align="right">' + val.Extended_Price.toLocaleString() + '</div>');
+            $ele.append('<div class="col-md-1"><a  id="EditOrderDetails_"' + val.Id + ' href=""> <span class="glyphicon glyphicon-pencil"></span> </a>  |  <a  id="DeleteOrderDetails_"' + val.Id + ' href=""><span class="glyphicon glyphicon-trash"></span></a></div>');
+            $ele.append('</div>');
+        }
+    )
+    $ele.append(' <div class="col-md-7 oddRowbgColor " align="right"><b>' + OrderTotalPrice.toLocaleString() + '</b></div>');
+    $ele.append('<div class="col-md-5"></div>'); 
+
 }
 //=======================================
 //=======================================
@@ -105,7 +163,7 @@ function renderWarehouses(element, data) {
 //=======================================
 //=======================================
 function CheckOrderBeforeSave() {
-    alert($("#HOrderID").val());
+    //alert($("#HOrderID").val());
     return false;
 }
 //=======================================
@@ -114,12 +172,10 @@ function EnableDisableOrderDetails() {
     if ($("#HOrderID").val() === "")
     {
         $("#OrderDetails").find(":input").prop("disabled", true);
-        //document.getElementById("OrderDetails").disabled = true;
     }
     else
     {
         $("#OrderDetails").find(":input").prop("disabled", false);
-       // document.getElementById("OrderDetails").disabled = false;
     }
     $("#ExtendedPrice").prop('disabled', true);
 }
@@ -128,78 +184,89 @@ function EnableDisableOrderDetails() {
 function ValidateOrderDetails() {
    
     var isAllValid = true;
-   
-    if ($('#ItemGroup').val() === "0" || $('#ItemGroup').val() === "Select") {
-        isAllValid = false;
-        $('#ItemGroup').siblings('span.error').css('visibility', 'visible');
-    }
-    else {
-        $('#ItemGroup').siblings('span.error').css('visibility', 'hidden');
-   }
+    if ($('#HOrderID').val() !== 'undefined' && $("#HOrderID").val() !== "")
+    {
+        if ($('#ItemGroup').val() === "0" || $('#ItemGroup').val() === "Select") {
+            isAllValid = false;
+            $('#ItemGroup').siblings('span.error').css('visibility', 'visible');
+        }
+        else {
+            $('#ItemGroup').siblings('span.error').css('visibility', 'hidden');
+       }
 
-    if ($('#Item').val() === "0" || $('#Item').val() === "Select") {
-       isAllValid = false;
-       $('#Item').siblings('span.error').css('visibility', 'visible');
-    }
-    else {
-       $('#Item').siblings('span.error').css('visibility', 'hidden');
-   }
+        if ($('#Item').val() === "0" || $('#Item').val() === "Select") {
+           isAllValid = false;
+           $('#Item').siblings('span.error').css('visibility', 'visible');
+        }
+        else {
+           $('#Item').siblings('span.error').css('visibility', 'hidden');
+       }
 
-    if ($('#Warehouse').val() === "0" || $('#Warehouse').val() === "Select") {
-       isAllValid = false;
-       $('#Warehouse').siblings('span.error').css('visibility', 'visible');
-   }
-   else {
-       $('#Warehouse').siblings('span.error').css('visibility', 'hidden');
-   }
+        if ($('#Warehouse').val() === "0" || $('#Warehouse').val() === "Select") {
+           isAllValid = false;
+           $('#Warehouse').siblings('span.error').css('visibility', 'visible');
+       }
+       else {
+           $('#Warehouse').siblings('span.error').css('visibility', 'hidden');
+       }
+        if (!$.isNumeric($('#Boxes').val())) {
+           isAllValid = false;
+           $('#Boxes').siblings('span.error').css('visibility', 'visible');
+       }
+       else {
+           $('#Boxes').siblings('span.error').css('visibility', 'hidden');
+       }
 
-    if (!$.isNumeric($('#Boxes').val())) {
-       isAllValid = false;
-       $('#Boxes').siblings('span.error').css('visibility', 'visible');
-   }
-   else {
-       $('#Boxes').siblings('span.error').css('visibility', 'hidden');
-   }
+        if ($('#ReserveBoxes').val() !== "" && !$.isNumeric($('#ReserveBoxes').val())) {
+           isAllValid = false;
+           $('#ReserveBoxes').siblings('span.error').css('visibility', 'visible');
+       }
+       else {
+           $('#ReserveBoxes').siblings('span.error').css('visibility', 'hidden');
+       }
 
-    if ($('#ReserveBoxes').val() !== "" && !$.isNumeric($('#ReserveBoxes').val())) {
-       isAllValid = false;
-       $('#ReserveBoxes').siblings('span.error').css('visibility', 'visible');
-   }
-   else {
-       $('#ReserveBoxes').siblings('span.error').css('visibility', 'hidden');
-   }
+        if ($('#ExtraKg').val() !== "" && !$.isNumeric($('#ReserveBoxes').val())) {
+           isAllValid = false;
+           $('#ExtraKg').siblings('span.error').css('visibility', 'visible');
+       }
+       else {
+           $('#ExtraKg').siblings('span.error').css('visibility', 'hidden');
+       }
 
-    if ($('#ExtraKg').val() !== "" && !$.isNumeric($('#ReserveBoxes').val())) {
-       isAllValid = false;
-       $('#ExtraKg').siblings('span.error').css('visibility', 'visible');
+       if (!$.isNumeric($('#Price').val())) {
+           isAllValid = false;
+           $('#Price').siblings('span.error').css('visibility', 'visible');
+       }
+       else {
+           $('#Price').siblings('span.error').css('visibility', 'hidden');
+       }
+       if (isAllValid) {
+           CalcExtendexPrice();
+       }
    }
-   else {
-       $('#ExtraKg').siblings('span.error').css('visibility', 'hidden');
-   }
-
-   if (!$.isNumeric($('#Price').val())) {
-       isAllValid = false;
-       $('#Price').siblings('span.error').css('visibility', 'visible');
-   }
-   else {
-       $('#Price').siblings('span.error').css('visibility', 'hidden');
-   }
-    /*
-   if ($('#ExtendedPrice').val() === "0") {
-       isAllValid = false;
-       $('#ExtendedPrice').siblings('span.error').css('visibility', 'visible');
-   }
-   else {
-       $('#ExtendedPrice').siblings('span.error').css('visibility', 'hidden');
-   }
-   */
-   if (isAllValid) {
-       CalcExtendexPrice();
-       saveOrderDetailsRow();
-   }
-
-
 }
+//=======================================
+//=======================================
+function ClearOrderDetailsForm()
+{
+    $("#ItemGroup").val($("#ItemGroup option:first").val());
+    $('#ItemGroup').siblings('span.error').css('visibility', 'hidden');
+    //$('#Item').val('Select');
+    $("#Item").val($("#Item option:first").val());
+    $('#Item').siblings('span.error').css('visibility', 'hidden');
+    $("#Warehouse").val($("#Warehouse option:first").val());
+    $('#Warehouse').siblings('span.error').css('visibility', 'hidden');
+    $('#Boxes').val('');
+    $('#Boxes').siblings('span.error').css('visibility', 'hidden');
+    $('#ReserveBoxes').val('');
+    $('#ReserveBoxes').siblings('span.error').css('visibility', 'hidden');
+    $('#ExtraKg').val('');
+    $('#ExtraKg').siblings('span.error').css('visibility', 'hidden');
+    $('#Price').val('');
+    $('#Price').siblings('span.error').css('visibility', 'hidden');
+    $("#ExtendedPrice").val('');
+}
+//=======================================
 //=======================================
 function saveOrderDetailsRow()
 {
@@ -218,21 +285,18 @@ function saveOrderDetailsRow()
     if (orderItem.OrderID !== "" && orderItem.OrderID !== "0" ){
         $.ajax({
             type: "Post",
-            url: "/Orders/SaveOrderDetailsRow",
+            url: "/OrderAjax/SaveOrderDetailsRow",
             data: JSON.stringify(orderItem),
             contentType: 'application/json',
             success: function (data) {
-                //render items to appropriate dropdown
-                debugger;
-                alert(data);
-                addOrderDetail();
+                LoadOrderDetails();
+                ClearOrderDetailsForm();
             },
             error: function (error) {
                 console.log(error);
             }
         })
     }
-
 }
 //=======================================
 //=======================================
@@ -255,7 +319,6 @@ function genCheckOnHands(id, searchText) {
     });
     return valid;
 }
-
 //=======================================
 //=======================================
 function checkOnHands() {
@@ -263,40 +326,51 @@ function checkOnHands() {
     var extraValid = genCheckOnHands('ExtraKg', 'Extra: ');
     if (boxesValid === true && extraValid === true) {
         return true;
-    } else {
+    }
+    else {
         return false;
     }
-    return true;
+    //return true;
 }
 //=======================================
 //=======================================
 function addOrderDetail() {
-    var rowCount = $('#orderDetailsTable tr').length;
-    var row = '';
-    if ((rowCount + 1) % 2 === 0)
-        row = '<tr class=" alter-info">';
-    else
-        row = '<tr>';
-    row += '<td>' + $("#Item option:selected").text() + '</td>';
-    row +='<td>' + $("#Warehouse option:selected").text().split('|')[0] + '</td>';
-    row += '<td>' + $("#Boxes").val() + '</td>';
-    row +='<td>' + $("#ReserveBoxes").val() + '</td>';
-    row +='<td>' + $("#ExtraKg").val() + '</td>';
-    row +='<td>' + $("#Price").val() + '</td>';
-    row +='<td>' + $("#ExtendedPrice").val() + $("#ExtendedPrice").text() + '</td>';
-    row += '<td><button id="EditOrderRow" style="background: green;" type="button" class="editRow btn btn-warning" onclick=" DeleteOrderRow()">Edit</ button></td>';
-    row += '<td><button id="DeleteOrderRow" style="background: red;" type="button" class="removeRow btn btn-danger">Delete</ button></td>';
-    row += '</tr>';
-    $('#orderDetailsTable tbody').last().append(row);
-    $(".removeRow").on('click',function(){
-        $(this).parent().parent().remove();
-    })
+   
+    $.ajax({
+        type: 'POST',
+        url: '@Url.Content("OrderAjax/GetOrderDetails")',
+        data: { 'Id': $("#HOrderID").val() },
+        success: function (data) {
+            $('#divid').innerHTML = data;
+        }
+    });
+    //var rowCount = $('#orderDetailsTable tr').length;
+    //var row = '';
+    //if ((rowCount + 1) % 2 === 0)
+    //    row = '<tr class=" alter-info">';
+    //else
+    //    row = '<tr>';
+    //row += '<td>' + $("#Item option:selected").text() + '</td>';
+    //row +='<td>' + $("#Warehouse option:selected").text().split('|')[0] + '</td>';
+    //row += '<td>' + $("#Boxes").val() + '</td>';
+    //row +='<td>' + $("#ReserveBoxes").val() + '</td>';
+    //row +='<td>' + $("#ExtraKg").val() + '</td>';
+    //row +='<td>' + $("#Price").val() + '</td>';
+    //row +='<td>' + $("#ExtendedPrice").val() + $("#ExtendedPrice").text() + '</td>';
+    //row += '<td><button id="EditOrderRow" style="background: green;" type="button" class="editRow btn btn-warning" onclick=" DeleteOrderRow()">Edit</ button></td>';
+    //row += '<td><button id="DeleteOrderRow" style="background: red;" type="button" class="removeRow btn btn-danger">Delete</ button></td>';
+    //row += '</tr>';
+    //$('#orderDetailsTable tbody').last().append(row);
+    //$(".removeRow").on('click',function(){
+    //    $(this).parent().parent().remove();
+    //})
 }
 //=======================================
 //=======================================
 function DeleteOrderRow() {
-    alert("shaba");
-     $("#DeleteOrderRow").closest( 'tr').remove();
+    if (confirm("Do you realy want to delete this?")) {
+        $("#DeleteOrderRow").closest('tr').remove();
+    }
 }
 //=======================================
 //=======================================
@@ -315,21 +389,27 @@ function CalcExtendexPrice() {
             extraKg = parseFloat($('#ExtraKg').val());
         if (boxes > 0 && boxWeight > 0)
             $('#ExtendedPrice').attr('value', ((boxes * parseFloat(boxWeight)) + extraKg) * parseFloat($('#Price').val()));
-
-       // addOrderDetail();
-        /*if ($('#ExtendedPrice').val() !== "" && !$.isNumeric($('#ExtendedPrice').val())) {
-            // try save
-        }*/
+        
+        if ($('#ExtendedPrice').val() !== "" && $.isNumeric($('#ExtendedPrice').val())) {
+            saveOrderDetailsRow(); 
+        }
     }
 }
 //=======================================
 //=======================================
 $(document).ready(
     EnableDisableOrderDetails(),
+    LoadOrderDetails(),
+     
+  
+   // $('#OrderDetailsForPartial').load("~/Sale/Orders/GetOrderDetails/", { Id: $("#HOrderID").val(), viewName: "_OrderDetails"}),
+    //$.get('@Url.Action("GetOrderDetails","Orders", new { id = ' + $("#HOrderID").val() + ' } )', function (data) {
+    //    $('#OrderDetailsForPartial').html(data);
+    //}),
+    
+    //$('#Add').on('click', ValidateOrderDetails())
     LoadItemGroups($('#ItemGroup')),
-    
-
-    $('#Add').on('click', ValidateOrderDetails())
-   
-    
-    );
+    $("a[id^='EditOrderDetails_']").on('click', function () {
+        alert(this.id);
+    })
+ );

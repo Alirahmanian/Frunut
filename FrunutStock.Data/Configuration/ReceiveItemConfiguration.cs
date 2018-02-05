@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace FrunutStock.Data.Configuration
 {
-    class AddItemConfiguration : EntityTypeConfiguration<AddItem>
+    class ReceiveItemConfiguration : EntityTypeConfiguration<ReceiveItem>
     {
-        public AddItemConfiguration()
+        public ReceiveItemConfiguration()
         {
-            ToTable("AddItems");
+            ToTable("ReceiveItems");
             HasKey(t => t.ID);
             Property(t => t.ID).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             Property(t => t.AddedDate).IsRequired();
@@ -30,8 +30,8 @@ namespace FrunutStock.Data.Configuration
 
 
             //relationship  
-            HasRequired(t => t.Item).WithMany(g => g.AddItems).HasForeignKey(t => t.ItemID);
-            HasRequired(t => t.Warehouse).WithMany(g => g.AddItems).HasForeignKey(t => t.WarehouseID);
+            HasRequired(t => t.Item);
+            HasRequired(t => t.Warehouse);
 
         }
     }

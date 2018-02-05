@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Web.Http;
+using System.Web.Mvc;
 
 namespace FrunutStock.Web.Areas.Sale
 {
@@ -14,6 +15,7 @@ namespace FrunutStock.Web.Areas.Sale
 
         public override void RegisterArea(AreaRegistrationContext context) 
         {
+           
             context.MapRoute(
                 "Sale_default",
                 "Sale/{controller}/{action}/{id}",

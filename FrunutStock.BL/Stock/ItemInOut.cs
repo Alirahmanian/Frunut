@@ -16,28 +16,28 @@ namespace FrunutStock.BL.Stock
         {
            
         }
-        #region AddItem Crud
-        public bool CreateAddItem(FrunutStockEntities db, AddItem addItem)
+        #region ReceiveItem Crud
+        public bool CreateReceiveItem(FrunutStockEntities db, ReceiveItem receiveItem)
         {
             bool result = false;
             using (var dbContextTransaction = db.Database.BeginTransaction())
             {
-                var itemWarehouse = db.ItemWarehouses.Where(i => i.ItemID == addItem.ItemID && i.WarehouseID == addItem.WarehouseID).FirstOrDefault();
-                var item = db.Items.Where(i => i.ID == addItem.ItemID).FirstOrDefault();
+                var itemWarehouse = db.ItemWarehouses.Where(i => i.ItemID == receiveItem.ItemID && i.WarehouseID == receiveItem.WarehouseID).FirstOrDefault();
+                var item = db.Items.Where(i => i.ID == receiveItem.ItemID).FirstOrDefault();
                 try
                 {
                     if (itemWarehouse == null)
                     {
-                       ItemWarehouse iw = AddItemWarehouse(addItem, item);
+                       ItemWarehouse iw = AddItemWarehouse(receiveItem, item);
                         db.ItemWarehouses.Add(iw);
                     }
                     else
                     {
-                        UpdateItemWarehouse(itemWarehouse, addItem, item, 1);
+                        UpdateItemWarehouse(itemWarehouse, receiveItem, item, 1);
                         db.Entry(itemWarehouse).State = EntityState.Modified;
                     }
                    
-                    db.AddItems.Add(addItem);
+                    db.ReceiveItems.Add(receiveItem);
                     
                     db.SaveChanges();
                     dbContextTransaction.Commit();
@@ -53,48 +53,48 @@ namespace FrunutStock.BL.Stock
             return result;
         }
 
-        public bool EditAddItem(FrunutStockEntities db, AddItem addItem)
+        public bool EditReceiveItem(FrunutStockEntities db, ReceiveItem receiveItem)
         {
             bool result = false;
             using (var dbContextTransaction = db.Database.BeginTransaction())
             {
-                var oldAddItem = db.AddItems.Find(addItem.ID);
+                var oldReceiveItem = db.ReceiveItems.Find(receiveItem.ID);
                 
                 try
                 {
-                    if (oldAddItem == null)
+                    if (oldReceiveItem == null)
                     {
                         //dbContextTransaction.Rollback();
                         //result = false;
                         throw new System.InvalidOperationException("Could't find old values.");
                     }
 
-                    var oldItemWarehouse = db.ItemWarehouses.Where(i => i.ItemID == oldAddItem.ItemID && i.WarehouseID == oldAddItem.WarehouseID).FirstOrDefault();
-                    var oldItem = db.Items.Where(i => i.ID == oldAddItem.ItemID).FirstOrDefault();
+                    var oldItemWarehouse = db.ItemWarehouses.Where(i => i.ItemID == oldReceiveItem.ItemID && i.WarehouseID == oldReceiveItem.WarehouseID).FirstOrDefault();
+                    var oldItem = db.Items.Where(i => i.ID == oldReceiveItem.ItemID).FirstOrDefault();
                     if (oldItemWarehouse == null)
                     {
                         throw new System.InvalidOperationException("Could't find old values.");
                     }
 
                         
-                    UpdateItemWarehouse(oldItemWarehouse, oldAddItem, oldItem, -1);
+                    UpdateItemWarehouse(oldItemWarehouse, oldReceiveItem, oldItem, -1);
                     db.Entry(oldItemWarehouse).State = EntityState.Modified;
                     db.SaveChanges();
 
-                    var itemWarehouse = db.ItemWarehouses.Where(i => i.ItemID == addItem.ItemID && i.WarehouseID == addItem.WarehouseID).FirstOrDefault();
-                    var item = db.Items.Where(i => i.ID == addItem.ItemID).FirstOrDefault();
+                    var itemWarehouse = db.ItemWarehouses.Where(i => i.ItemID == receiveItem.ItemID && i.WarehouseID == receiveItem.WarehouseID).FirstOrDefault();
+                    var item = db.Items.Where(i => i.ID == receiveItem.ItemID).FirstOrDefault();
                     if (itemWarehouse == null)
                     {
-                        ItemWarehouse iw = AddItemWarehouse(addItem, item);
+                        ItemWarehouse iw = AddItemWarehouse(receiveItem, item);
                         db.ItemWarehouses.Add(iw);
                     }
                     else
                     {
-                        UpdateItemWarehouse(itemWarehouse, addItem, item, 1);
+                        UpdateItemWarehouse(itemWarehouse, receiveItem, item, 1);
                        
                     }
-                    db.Entry(oldAddItem).State = EntityState.Detached;
-                    db.Entry(addItem).State = EntityState.Modified;
+                    db.Entry(oldReceiveItem).State = EntityState.Detached;
+                    db.Entry(receiveItem).State = EntityState.Modified;
                     db.SaveChanges();
                     dbContextTransaction.Commit();
                     result = true;
@@ -102,7 +102,7 @@ namespace FrunutStock.BL.Stock
                 }
                 catch (Exception err)
                 {
-                    // UpdateItemWarehouse(itemWarehouse, addItem, -1);
+                    // UpdateItemWarehouse(itemWarehouse, receiveItem, -1);
                     dbContextTransaction.Rollback();
                     result = false;
                 }
@@ -110,37 +110,37 @@ namespace FrunutStock.BL.Stock
             return result;
         }
 
-        public bool DeleteAddItem(FrunutStockEntities db, AddItem addItem)
+        public bool DeleteReceiveItem(FrunutStockEntities db, ReceiveItem receiveItem)
         {
             bool result = false;
             using (var dbContextTransaction = db.Database.BeginTransaction())
             {
-                var oldAddItem = db.AddItems.Find(addItem.ID);
+                var oldReceiveItem = db.ReceiveItems.Find(receiveItem.ID);
 
                 try
                 {
-                    if (oldAddItem == null)
+                    if (oldReceiveItem == null)
                     {
                         //dbContextTransaction.Rollback();
                         //result = false;
                         throw new System.InvalidOperationException("Could't find old values.");
                     }
 
-                    var oldItemWarehouse = db.ItemWarehouses.Where(i => i.ItemID == oldAddItem.ItemID && i.WarehouseID == oldAddItem.WarehouseID).FirstOrDefault();
-                    var oldItem = db.Items.Where(i => i.ID == oldAddItem.ItemID).FirstOrDefault();
+                    var oldItemWarehouse = db.ItemWarehouses.Where(i => i.ItemID == oldReceiveItem.ItemID && i.WarehouseID == oldReceiveItem.WarehouseID).FirstOrDefault();
+                    var oldItem = db.Items.Where(i => i.ID == oldReceiveItem.ItemID).FirstOrDefault();
                     if (oldItemWarehouse == null)
                     {
                         throw new System.InvalidOperationException("Could't find old values.");
                     }
 
                     // remove old values
-                    UpdateItemWarehouse(oldItemWarehouse, oldAddItem, oldItem, -1);
+                    UpdateItemWarehouse(oldItemWarehouse, oldReceiveItem, oldItem, -1);
                     db.Entry(oldItemWarehouse).State = EntityState.Modified;
                     db.SaveChanges();
                                        
-                    db.Entry(oldAddItem).State = EntityState.Detached;
-                    db.Entry(addItem).State = EntityState.Deleted;
-                    db.AddItems.Remove(addItem);
+                    db.Entry(oldReceiveItem).State = EntityState.Detached;
+                    db.Entry(receiveItem).State = EntityState.Deleted;
+                    db.ReceiveItems.Remove(receiveItem);
                     db.SaveChanges();
                     dbContextTransaction.Commit();
                     result = true;
@@ -148,7 +148,7 @@ namespace FrunutStock.BL.Stock
                 }
                 catch (Exception err)
                 {
-                    // UpdateItemWarehouse(itemWarehouse, addItem, -1);
+                    // UpdateItemWarehouse(itemWarehouse, receiveItem, -1);
                     dbContextTransaction.Rollback();
                     result = false;
                 }
@@ -156,29 +156,29 @@ namespace FrunutStock.BL.Stock
             return result;
         }
 
-        public ItemWarehouse AddItemWarehouse(AddItem addItem, Item item)
+        public ItemWarehouse AddItemWarehouse(ReceiveItem receiveItem, Item item)
         {
             ItemWarehouse iw = new ItemWarehouse();
-            iw.ItemID = addItem.ItemID;
-            iw.WarehouseID = addItem.WarehouseID;
-            iw.QtyBoxesIn = addItem.QtyBoxes;
-            iw.QtyKgIn = addItem.QtyKg;
-            iw.QtyBoxesOnhand = addItem.QtyBoxes;
-            iw.QtyKgOnhand = addItem.QtyKg;
-            iw.QtyTotalWeightIn = addItem.QtyKg + (addItem.QtyBoxes * item.BoxWeight);
-            iw.QtyTotalWeightOnhand = addItem.QtyKg + (addItem.QtyBoxes * item.BoxWeight);
+            iw.ItemID = receiveItem.ItemID;
+            iw.WarehouseID = receiveItem.WarehouseID;
+            iw.QtyBoxesIn = receiveItem.QtyBoxes;
+            iw.QtyKgIn = receiveItem.QtyKg;
+            iw.QtyBoxesOnhand = receiveItem.QtyBoxes;
+            iw.QtyKgOnhand = receiveItem.QtyKg;
+            iw.QtyTotalWeightIn = receiveItem.QtyKg + (receiveItem.QtyBoxes * item.BoxWeight);
+            iw.QtyTotalWeightOnhand = receiveItem.QtyKg + (receiveItem.QtyBoxes * item.BoxWeight);
             iw.QtyTotalWeightReserved = 0;
             return iw;
         }
 
-        public void UpdateItemWarehouse(ItemWarehouse itemWarehouse, AddItem addItem, Item item, int factor)
+        public void UpdateItemWarehouse(ItemWarehouse itemWarehouse, ReceiveItem receiveItem, Item item, int factor)
         {
-            itemWarehouse.QtyBoxesIn += addItem.QtyBoxes * factor;
-            itemWarehouse.QtyKgIn += addItem.QtyKg * factor;
-            itemWarehouse.QtyBoxesOnhand += addItem.QtyBoxes * factor;
-            itemWarehouse.QtyKgOnhand += addItem.QtyKg * factor;
-            itemWarehouse.QtyTotalWeightIn += (addItem.QtyKg * factor) + (addItem.QtyBoxes * item.BoxWeight) * factor;
-            itemWarehouse.QtyTotalWeightOnhand += (addItem.QtyKg * factor) + (addItem.QtyBoxes * item.BoxWeight) * factor;
+            itemWarehouse.QtyBoxesIn += receiveItem.QtyBoxes * factor;
+            itemWarehouse.QtyKgIn += receiveItem.QtyKg * factor;
+            itemWarehouse.QtyBoxesOnhand += receiveItem.QtyBoxes * factor;
+            itemWarehouse.QtyKgOnhand += receiveItem.QtyKg * factor;
+            itemWarehouse.QtyTotalWeightIn += (receiveItem.QtyKg * factor) + (receiveItem.QtyBoxes * item.BoxWeight) * factor;
+            itemWarehouse.QtyTotalWeightOnhand += (receiveItem.QtyKg * factor) + (receiveItem.QtyBoxes * item.BoxWeight) * factor;
         }
 
         #endregion

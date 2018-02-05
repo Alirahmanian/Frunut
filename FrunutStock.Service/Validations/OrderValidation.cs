@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using FrunutStock.Model.Models;
 
-namespace FrunutStock.Model.Partials
+
+namespace FrunutStock.Service.Validations
 {
-    public partial class Order
+    public class OrderValidation
     {
-        public bool AddCustomerDebt()
+        public string OrderIsvalid(Order order)
         {
-           
-            return true;
+            return "";
         }
     }
 }

@@ -12,58 +12,19 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Company.Name)
+            @Html.Label("Customer")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Employee.FirstName)
+            @Html.Label("Date")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AmountItem)
+            @Html.Label("Payment date")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AmountReserve)
+            @Html.Label("Loading date")
         </th>
         <th>
             @Html.DisplayNameFor(model => model.TotalPrice)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.OrderDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PaymentDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PaidDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LoadingDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LoadedDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AmountPaid)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Coments)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.OrderdBy)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Transport)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PaymentWarning)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ForcedPaid)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.OrderPaid)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Cash)
         </th>
         <th></th>
     </tr>
@@ -74,60 +35,21 @@
             @Html.DisplayFor(modelItem => item.Company.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Employee.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AmountItem)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AmountReserve)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TotalPrice)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.OrderDate)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.PaymentDate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.PaidDate)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.LoadingDate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.LoadedDate)
+            @Html.DisplayFor(modelItem => item.TotalPrice)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.AmountPaid)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Coments)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.OrderdBy)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Transport)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PaymentWarning)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ForcedPaid)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.OrderPaid)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Cash)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Create", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            <a href="@Url.Action("Create", "Orders", new { id = item.ID })"><span class="glyphicon glyphicon-pencil"></span></a> |
+            <a href="@Url.Action("Details", "Orders", new { id = item.ID })"><span class="glyphicon glyphicon-print"></span></a> |
+            <a href="@Url.Action("Delete", "Orders", new { id = item.ID })"><span class="glyphicon glyphicon-trash"></span></a> 
         </td>
     </tr>
 }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FrunutStock.Model.Models.AddItem>
+﻿@model IEnumerable<FrunutStock.Model.Models.ReceiveItem>
 
 @{
     ViewBag.Title = "Index";
@@ -11,6 +11,7 @@
 </p>
 <table class="table">
     <tr>
+       
         <th>
             @Html.DisplayNameFor(model => model.Item.Name)
         </th>
@@ -29,11 +30,15 @@
         <th>
             @Html.DisplayNameFor(model => model.QtyKg)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Company.Name)
+        </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
+       
         <td>
             @Html.DisplayFor(modelItem => item.Item.Name)
         </td>
@@ -51,6 +56,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.QtyKg)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Company.Name)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |

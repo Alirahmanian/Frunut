@@ -14,7 +14,8 @@ namespace FrunutStock.Model.Models
         public string Address { get; set; }
         public string Phone { get; set; }
 
-        public ICollection<OrderDetail> OrderDetails { get; set; }
-        public ICollection<AddItem> AddItems { get; set; }
+        //public ICollection<OrderDetail> OrderDetails { get; set; }
+        public ICollection<ReceiveItem> ReceiveItems { get; set; }
+       // public ICollection<Item> Items { get; set; }
     }
 }

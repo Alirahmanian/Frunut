@@ -40,7 +40,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompanyService.cs" />
+    <Compile Include="EmployeeService.cs" />
+    <Compile Include="ItemGroupService.cs" />
+    <Compile Include="ItemService.cs" />
+    <Compile Include="ItemWarehouseService.cs" />
+    <Compile Include="OrderDetailService.cs" />
+    <Compile Include="OrderService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validations\OrderDetailsValidation.cs" />
+    <Compile Include="Validations\OrderValidation.cs" />
+    <Compile Include="WarehouseService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FrunutStock.Data\FrunutStock.Data.csproj">
@@ -51,6 +61,10 @@
       <Project>{ee82da10-6cf6-4e40-8ec9-7c279bbf5fb5}</Project>
       <Name>FrunutStock.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Balances\Companies\" />
+    <Folder Include="Balances\ItemWarehouses\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

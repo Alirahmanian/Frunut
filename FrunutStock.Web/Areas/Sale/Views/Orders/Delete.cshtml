@@ -161,8 +161,9 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <span class="glyphicon glyphicon-hand-left"> </span>@Html.ActionLink("Back to List", "Index") |
+            <input type="submit" value="Delete" onclick="return confirm('Do you realy want to delete this post?');" class="btn btn-default" />
+
         </div>
     }
 </div>

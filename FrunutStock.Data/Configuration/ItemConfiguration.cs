@@ -29,7 +29,7 @@ namespace FrunutStock.Data.Configuration
 
 
             //relationship  
-            HasRequired(t => t.ItemGroup).WithMany(g => g.Items).HasForeignKey(t => t.ItemGroupID);
+            HasRequired(t => t.ItemGroup).WithMany(g => g.Items).HasForeignKey(t => t.ItemGroupID).WillCascadeOnDelete(false);
 
         }
     }
